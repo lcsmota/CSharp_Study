@@ -1,3 +1,5 @@
 File.CreateText(path)
 Creates or opens a file for writing UTF-8 encoded text.
 If the file already exists, its contents are overwritten.
+File.AppendText(path)
+Creates a StreamWriter that appends UTF-8 encoded text to an existing file, or to a new file if the specified file does not exist.

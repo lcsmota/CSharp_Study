@@ -2,11 +2,13 @@
 
 string path = Directory.GetCurrentDirectory() + $"{Path.DirectorySeparatorChar}Text.txt";
 FileCreateText.CreateText(path);
+FileCreateText.AppendText(path);
 FileCreateText.ReadText(path);
 
 string path2 = Directory.GetCurrentDirectory() + $"{Path.DirectorySeparatorChar}Text_Two.txt";
 var file = new FileInfo(path2);
 FileInfoCreateText.CreateText(file);
+FileInfoCreateText.AppendText(file);
 FileInfoCreateText.ReadText(file);
 
 string path3 = Directory.GetCurrentDirectory() + $"{Path.DirectorySeparatorChar}Text_Three.txt";

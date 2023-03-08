@@ -13,6 +13,14 @@ public static class FileCreateText
         }
     }
 
+    public static void AppendText(string path)
+    {
+        using StreamWriter sw = File.AppendText(path);
+        sw.WriteLine("File.AppendText(path)");
+        sw.Write("Creates a StreamWriter that appends UTF-8 encoded text to an existing file,");
+        sw.WriteLine(" or to a new file if the specified file does not exist.");
+    }
+
     public static void ReadText(string path)
     {
         using StreamReader sr = File.OpenText(path);

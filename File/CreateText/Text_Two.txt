@@ -1,2 +1,4 @@
 FileInfo.CreateText()
 Creates a StreamWriter that writes a new text file.
+FileInfo.AppendText()
+Creates a StreamWriter that appends text to the file represented by this instance of the FileInfo.
