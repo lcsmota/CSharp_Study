@@ -117,58 +117,91 @@
 #endregion
 
 #region Query Operator: OrderBy and OrderByDescending
-IList<Student> students = new List<Student>()
+// IList<Student> students = new List<Student>()
+// {
+//     new Student() { Id = 1, Name = "John", Age = 18 },
+//     new Student() { Id = 2, Name = "Mary", Age = 32 },
+//     new Student() { Id = 3, Name = "Josh", Age = 29 },
+//     new Student() { Id = 4, Name = "Aaron", Age = 24 },
+//     new Student() { Id = 5, Name = "Alysson", Age = 56 },
+//     new Student() { Id = 6, Name = "Karlos", Age = 43 },
+// };
+
+// var orderByResult = from std in students
+//                     orderby std.Name
+//                     select std;
+
+// var orderByDescendingResult = from std in students
+//                               orderby std.Age descending
+//                               select std;
+
+// var orderByMultipleSorting = from std in students
+//                              orderby std.Name, std.Age
+//                              select new { std.Name, std.Age };
+
+// var studentsInDescOrder = students.OrderByDescending(e => e.Id);
+
+// Console.WriteLine("OrderBy: Name");
+// foreach (var stdsAsc in orderByResult)
+//     Console.WriteLine(stdsAsc.ToString());
+
+// Console.WriteLine("OrderByDescending: Age");
+// foreach (var stdsDes in orderByDescendingResult)
+//     Console.WriteLine(stdsDes.ToString());
+
+// Console.WriteLine("OrderByMultipleSorting: Name and Age");
+// foreach (var stdsMultSort in orderByMultipleSorting)
+//     Console.WriteLine(stdsMultSort.ToString());
+
+// Console.WriteLine("OrderByDescending Method: Id");
+// foreach (var stdsDesMeth in studentsInDescOrder)
+//     Console.WriteLine(stdsDesMeth.ToString());
+// class Student
+// {
+//     public int Id { get; set; }
+//     public string Name { get; set; }
+//     public int Age { get; set; }
+
+//     public override string ToString()
+//         => $"\t{Id}: {Name} - {Age}";
+// }
+
+#endregion
+
+#region Query Operator: ThenBy and ThenByDescending
+IList<Person> people = new List<Person>()
 {
-    new Student() { Id = 1, Name = "John", Age = 18 },
-    new Student() { Id = 2, Name = "Mary", Age = 32 },
-    new Student() { Id = 3, Name = "Josh", Age = 29 },
-    new Student() { Id = 4, Name = "Aaron", Age = 24 },
-    new Student() { Id = 5, Name = "Alysson", Age = 56 },
-    new Student() { Id = 6, Name = "Karlos", Age = 43 },
+    new Person() {Id = 1, Name = "Juca", Age = 25},
+    new Person() {Id = 2, Name = "Maria", Age = 32},
+    new Person() {Id = 3, Name = "Karlos", Age = 17},
+    new Person() {Id = 4, Name = "Mattheus", Age = 56},
+    new Person() {Id = 5, Name = "Maria", Age = 14},
+    new Person() {Id = 6, Name = "Eduardo", Age = 39},
+    new Person() {Id = 7, Name = "Maria", Age = 73}
 };
 
-var orderByResult = from std in students
-                    orderby std.Name
-                    select std;
+var thenByResult = people.OrderBy(e => e.Name).ThenBy(e => e.Age);
+var thenByDescResult = people.OrderBy(e => e.Name).ThenByDescending(e => e.Age);
 
-var orderByDescendingResult = from std in students
-                              orderby std.Age descending
-                              select std;
+Console.WriteLine("OrderBy: Name & ThenBy: Age");
+foreach (var person in thenByResult)
+    Console.WriteLine(person.ToString());
 
-var orderByMultipleSorting = from std in students
-                             orderby std.Name, std.Age
-                             select new { std.Name, std.Age };
+Console.WriteLine("OrderBy: Name & ThenByDescending: Age");
+foreach (var person in thenByDescResult)
+    Console.WriteLine(person.ToString());
 
-var studentsInDescOrder = students.OrderByDescending(e => e.Id);
-
-Console.WriteLine("OrderBy: Name");
-foreach (var stdsAsc in orderByResult)
-    Console.WriteLine(stdsAsc.ToString());
-
-Console.WriteLine("OrderByDescending: Age");
-foreach (var stdsDes in orderByDescendingResult)
-    Console.WriteLine(stdsDes.ToString());
-
-Console.WriteLine("OrderByMultipleSorting: Name and Age");
-foreach (var stdsMultSort in orderByMultipleSorting)
-    Console.WriteLine(stdsMultSort.ToString());
-
-Console.WriteLine("OrderByDescending Method: Id");
-foreach (var stdsDesMeth in studentsInDescOrder)
-    Console.WriteLine(stdsDesMeth.ToString());
-class Student
+class Person
 {
     public int Id { get; set; }
     public string Name { get; set; }
     public int Age { get; set; }
 
     public override string ToString()
-        => $"\t{Id}: {Name} - {Age}";
+        => $"\t{Name} - {Age}";
 }
 
 #endregion
-
-
 
 
 
