@@ -79,41 +79,113 @@
 #endregion
 
 #region Query Operator: OfType
-IList<object> mixedList = new List<object>();
-mixedList.Add(0);
-mixedList.Add("One");
-mixedList.Add("Juca Monteiro");
-mixedList.Add(3);
-mixedList.Add(new Person { Name = "Karlos", Age = 25 });
+// IList<object> mixedList = new List<object>();
+// mixedList.Add(0);
+// mixedList.Add("One");
+// mixedList.Add("Juca Monteiro");
+// mixedList.Add(3);
+// mixedList.Add(new Person { Name = "Karlos", Age = 25 });
 
-var stringResult = from result in mixedList.OfType<string>()
-                   select result;
+// var stringResult = from result in mixedList.OfType<string>()
+//                    select result;
 
-var intResult = from result in mixedList.OfType<int>()
-                select result;
+// var intResult = from result in mixedList.OfType<int>()
+//                 select result;
 
-var objectResult = mixedList.OfType<Person>();
+// var objectResult = mixedList.OfType<Person>();
 
-Console.WriteLine("String type:");
-foreach (var str in stringResult)
-    Console.WriteLine(str);
+// Console.WriteLine("String type:");
+// foreach (var str in stringResult)
+//     Console.WriteLine(str);
 
-Console.WriteLine("Int type:");
-foreach (var integer in intResult)
-    Console.WriteLine(integer);
+// Console.WriteLine("Int type:");
+// foreach (var integer in intResult)
+//     Console.WriteLine(integer);
 
-Console.WriteLine("Object type:");
-foreach (var obj in objectResult)
-    Console.WriteLine(obj.ToString());
+// Console.WriteLine("Object type:");
+// foreach (var obj in objectResult)
+//     Console.WriteLine(obj.ToString());
 
-class Person
+// class Person
+// {
+//     public string Name { get; set; }
+//     public int Age { get; set; }
+
+//     public override string ToString()
+//         => $"{Name} - {Age}";
+// }
+#endregion
+
+#region Query Operator: OrderBy and OrderByDescending
+IList<Student> students = new List<Student>()
 {
+    new Student() { Id = 1, Name = "John", Age = 18 },
+    new Student() { Id = 2, Name = "Mary", Age = 32 },
+    new Student() { Id = 3, Name = "Josh", Age = 29 },
+    new Student() { Id = 4, Name = "Aaron", Age = 24 },
+    new Student() { Id = 5, Name = "Alysson", Age = 56 },
+    new Student() { Id = 6, Name = "Karlos", Age = 43 },
+};
+
+var orderByResult = from std in students
+                    orderby std.Name
+                    select std;
+
+var orderByDescendingResult = from std in students
+                              orderby std.Age descending
+                              select std;
+
+var orderByMultipleSorting = from std in students
+                             orderby std.Name, std.Age
+                             select new { std.Name, std.Age };
+
+var studentsInDescOrder = students.OrderByDescending(e => e.Id);
+
+Console.WriteLine("OrderBy: Name");
+foreach (var stdsAsc in orderByResult)
+    Console.WriteLine(stdsAsc.ToString());
+
+Console.WriteLine("OrderByDescending: Age");
+foreach (var stdsDes in orderByDescendingResult)
+    Console.WriteLine(stdsDes.ToString());
+
+Console.WriteLine("OrderByMultipleSorting: Name and Age");
+foreach (var stdsMultSort in orderByMultipleSorting)
+    Console.WriteLine(stdsMultSort.ToString());
+
+Console.WriteLine("OrderByDescending Method: Id");
+foreach (var stdsDesMeth in studentsInDescOrder)
+    Console.WriteLine(stdsDesMeth.ToString());
+class Student
+{
+    public int Id { get; set; }
     public string Name { get; set; }
     public int Age { get; set; }
 
     public override string ToString()
-        => $"{Name} - {Age}";
+        => $"\t{Id}: {Name} - {Age}";
 }
+
 #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
