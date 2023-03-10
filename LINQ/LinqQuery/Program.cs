@@ -169,42 +169,100 @@
 #endregion
 
 #region Query Operator: ThenBy and ThenByDescending
-IList<Person> people = new List<Person>()
+// IList<Person> people = new List<Person>()
+// {
+//     new Person() {Id = 1, Name = "Juca", Age = 25},
+//     new Person() {Id = 2, Name = "Maria", Age = 32},
+//     new Person() {Id = 3, Name = "Karlos", Age = 17},
+//     new Person() {Id = 4, Name = "Mattheus", Age = 56},
+//     new Person() {Id = 5, Name = "Maria", Age = 14},
+//     new Person() {Id = 6, Name = "Eduardo", Age = 39},
+//     new Person() {Id = 7, Name = "Maria", Age = 73}
+// };
+
+// var thenByResult = people.OrderBy(e => e.Name).ThenBy(e => e.Age);
+// var thenByDescResult = people.OrderBy(e => e.Name).ThenByDescending(e => e.Age);
+
+// Console.WriteLine("OrderBy: Name & ThenBy: Age");
+// foreach (var person in thenByResult)
+//     Console.WriteLine(person.ToString());
+
+// Console.WriteLine("OrderBy: Name & ThenByDescending: Age");
+// foreach (var person in thenByDescResult)
+//     Console.WriteLine(person.ToString());
+
+// class Person
+// {
+//     public int Id { get; set; }
+//     public string Name { get; set; }
+//     public int Age { get; set; }
+
+//     public override string ToString()
+//         => $"\t{Name} - {Age}";
+// }
+
+#endregion
+
+#region Query Operator: GroupBy and ToLookup
+IList<Student> students = new List<Student>()
 {
-    new Person() {Id = 1, Name = "Juca", Age = 25},
-    new Person() {Id = 2, Name = "Maria", Age = 32},
-    new Person() {Id = 3, Name = "Karlos", Age = 17},
-    new Person() {Id = 4, Name = "Mattheus", Age = 56},
-    new Person() {Id = 5, Name = "Maria", Age = 14},
-    new Person() {Id = 6, Name = "Eduardo", Age = 39},
-    new Person() {Id = 7, Name = "Maria", Age = 73}
+    new Student() {Id = 1, Name = "Karlos", Age = 26, Job = "Dev Backend", Gender = "Male"},
+    new Student() {Id = 2, Name = "Juca", Age = 34, Job = "Dev Frontend", Gender = "Male"},
+    new Student() {Id = 3, Name = "Mary", Age = 29, Job = "DevOps", Gender = "Female"},
+    new Student() {Id = 4, Name = "Nicole", Age = 26, Job = "Dev Backend", Gender = "Female"},
+    new Student() {Id = 5, Name = "Nancy", Age = 34, Job = "Dev Backend", Gender = "Female"},
+    new Student() {Id = 6, Name = "Robert", Age = 29, Job = "Dev Frontend", Gender = "Male"},
+    new Student() {Id = 6, Name = "Gustavo", Age = 57, Job = "DevOps", Gender = "Male"},
+    new Student() {Id = 6, Name = "John", Age = 61, Job = "DevOps", Gender = "Male"}
 };
 
-var thenByResult = people.OrderBy(e => e.Name).ThenBy(e => e.Age);
-var thenByDescResult = people.OrderBy(e => e.Name).ThenByDescending(e => e.Age);
+var groupedResult = from std in students
+                    group std by std.Age;
 
-Console.WriteLine("OrderBy: Name & ThenBy: Age");
-foreach (var person in thenByResult)
-    Console.WriteLine(person.ToString());
+var secondGroupedResult = students.GroupBy(e => e.Job);
 
-Console.WriteLine("OrderBy: Name & ThenByDescending: Age");
-foreach (var person in thenByDescResult)
-    Console.WriteLine(person.ToString());
+var thirdGroupResult = students.ToLookup(e => e.Gender);
 
-class Person
+foreach (var ageGroup in groupedResult)
+{
+    Console.WriteLine($"Age Group: {ageGroup.Key}");
+
+    foreach (var std in ageGroup)
+        Console.WriteLine(std.ToString());
+}
+
+Console.WriteLine();
+
+foreach (var jobGroup in secondGroupedResult)
+{
+    Console.WriteLine($"Job Group: {jobGroup.Key}");
+
+    foreach (var std in jobGroup)
+        Console.WriteLine(std.ToString());
+}
+
+Console.WriteLine();
+
+foreach (var genderGroup in thirdGroupResult)
+{
+    Console.WriteLine($"Gender Group: {genderGroup.Key}");
+
+    foreach (var std in genderGroup)
+        Console.WriteLine(std.ToString());
+}
+
+class Student
 {
     public int Id { get; set; }
     public string Name { get; set; }
     public int Age { get; set; }
+    public string Job { get; set; }
+    public string Gender { get; set; }
 
     public override string ToString()
-        => $"\t{Name} - {Age}";
+        => $"\t{Name}";
 }
-
 #endregion
-
-
-
 
 
 
