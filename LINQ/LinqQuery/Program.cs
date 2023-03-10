@@ -204,67 +204,129 @@
 #endregion
 
 #region Query Operator: GroupBy and ToLookup
+// IList<Student> students = new List<Student>()
+// {
+//     new Student() {Id = 1, Name = "Karlos", Age = 26, Job = "Dev Backend", Gender = "Male"},
+//     new Student() {Id = 2, Name = "Juca", Age = 34, Job = "Dev Frontend", Gender = "Male"},
+//     new Student() {Id = 3, Name = "Mary", Age = 29, Job = "DevOps", Gender = "Female"},
+//     new Student() {Id = 4, Name = "Nicole", Age = 26, Job = "Dev Backend", Gender = "Female"},
+//     new Student() {Id = 5, Name = "Nancy", Age = 34, Job = "Dev Backend", Gender = "Female"},
+//     new Student() {Id = 6, Name = "Robert", Age = 29, Job = "Dev Frontend", Gender = "Male"},
+//     new Student() {Id = 6, Name = "Gustavo", Age = 57, Job = "DevOps", Gender = "Male"},
+//     new Student() {Id = 6, Name = "John", Age = 61, Job = "DevOps", Gender = "Male"}
+// };
+
+// var groupedResult = from std in students
+//                     group std by std.Age;
+
+// var secondGroupedResult = students.GroupBy(e => e.Job);
+
+// var thirdGroupResult = students.ToLookup(e => e.Gender);
+
+// foreach (var ageGroup in groupedResult)
+// {
+//     Console.WriteLine($"Age Group: {ageGroup.Key}");
+
+//     foreach (var std in ageGroup)
+//         Console.WriteLine(std.ToString());
+// }
+
+// Console.WriteLine();
+
+// foreach (var jobGroup in secondGroupedResult)
+// {
+//     Console.WriteLine($"Job Group: {jobGroup.Key}");
+
+//     foreach (var std in jobGroup)
+//         Console.WriteLine(std.ToString());
+// }
+
+// Console.WriteLine();
+
+// foreach (var genderGroup in thirdGroupResult)
+// {
+//     Console.WriteLine($"Gender Group: {genderGroup.Key}");
+
+//     foreach (var std in genderGroup)
+//         Console.WriteLine(std.ToString());
+// }
+
+// class Student
+// {
+//     public int Id { get; set; }
+//     public string Name { get; set; }
+//     public int Age { get; set; }
+//     public string Job { get; set; }
+//     public string Gender { get; set; }
+
+//     public override string ToString()
+//         => $"\t{Name}";
+// }
+#endregion
+
+#region Query Operator: Join
 IList<Student> students = new List<Student>()
 {
-    new Student() {Id = 1, Name = "Karlos", Age = 26, Job = "Dev Backend", Gender = "Male"},
-    new Student() {Id = 2, Name = "Juca", Age = 34, Job = "Dev Frontend", Gender = "Male"},
-    new Student() {Id = 3, Name = "Mary", Age = 29, Job = "DevOps", Gender = "Female"},
-    new Student() {Id = 4, Name = "Nicole", Age = 26, Job = "Dev Backend", Gender = "Female"},
-    new Student() {Id = 5, Name = "Nancy", Age = 34, Job = "Dev Backend", Gender = "Female"},
-    new Student() {Id = 6, Name = "Robert", Age = 29, Job = "Dev Frontend", Gender = "Male"},
-    new Student() {Id = 6, Name = "Gustavo", Age = 57, Job = "DevOps", Gender = "Male"},
-    new Student() {Id = 6, Name = "John", Age = 61, Job = "DevOps", Gender = "Male"}
+    new Student() { Id = 1, Name = "Karlos", StandardId = 1},
+    new Student() { Id = 1, Name = "Mary", StandardId = 3},
+    new Student() { Id = 1, Name = "Juca", StandardId = 2},
+    new Student() { Id = 1, Name = "Eduardo", StandardId = 12},
+    new Student() { Id = 1, Name = "Mario", StandardId = 7},
+    new Student() { Id = 1, Name = "Katia"},
+    new Student() { Id = 1, Name = "Bia"},
 };
 
-var groupedResult = from std in students
-                    group std by std.Age;
-
-var secondGroupedResult = students.GroupBy(e => e.Job);
-
-var thirdGroupResult = students.ToLookup(e => e.Gender);
-
-foreach (var ageGroup in groupedResult)
+IList<Standard> standards = new List<Standard>()
 {
-    Console.WriteLine($"Age Group: {ageGroup.Key}");
+    new Standard() {StandardId = 1, StandardName = "Standard 1"},
+    new Standard() {StandardId = 2, StandardName = "Standard 2"},
+    new Standard() {StandardId = 3, StandardName = "Standard 3"},
+    new Standard() {StandardId = 7, StandardName = "Standard 7"},
+    new Standard() {StandardId = 12, StandardName = "Standard 12"},
+};
 
-    foreach (var std in ageGroup)
-        Console.WriteLine(std.ToString());
-}
+var innerJoinQuery = from student in students
+                     join standard in standards
+                     on student.StandardId equals standard.StandardId
+                     select new
+                     {
+                         StandardName = standard.StandardName,
+                         StudentName = student.Name
+                     };
+
+var innerJoinMethod = students.Join(
+    standards,
+    student => student.StandardId,
+    standard => standard.StandardId,
+    (student, standard) => new
+    {
+        StudentName = student.Name,
+        StandardName = standard.StandardName
+    }
+);
+
+foreach (var std in innerJoinQuery)
+    Console.WriteLine($"\t{std.StandardName} - {std.StudentName}");
 
 Console.WriteLine();
 
-foreach (var jobGroup in secondGroupedResult)
-{
-    Console.WriteLine($"Job Group: {jobGroup.Key}");
-
-    foreach (var std in jobGroup)
-        Console.WriteLine(std.ToString());
-}
-
-Console.WriteLine();
-
-foreach (var genderGroup in thirdGroupResult)
-{
-    Console.WriteLine($"Gender Group: {genderGroup.Key}");
-
-    foreach (var std in genderGroup)
-        Console.WriteLine(std.ToString());
-}
+foreach (var std in innerJoinMethod)
+    Console.WriteLine($"\t{std.StudentName} - {std.StandardName}");
 
 class Student
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public int Age { get; set; }
-    public string Job { get; set; }
-    public string Gender { get; set; }
-
-    public override string ToString()
-        => $"\t{Name}";
+    public int StandardId { get; set; }
 }
+
+class Standard
+{
+    public int StandardId { get; set; }
+    public string StandardName { get; set; }
+}
+
 #endregion
-
-
 
 
 
