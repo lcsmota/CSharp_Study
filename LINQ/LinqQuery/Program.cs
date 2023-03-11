@@ -329,85 +329,137 @@
 #endregion
 
 #region Query Operator: GroupJoin
+// IList<Student> students = new List<Student>()
+// {
+//     new Student() { Id = 1, Name = "Karlos", StandardId = 1},
+//     new Student() { Id = 2, Name = "Mary", StandardId = 3},
+//     new Student() { Id = 3, Name = "Juca", StandardId = 2},
+//     new Student() { Id = 4, Name = "Eduardo", StandardId = 12},
+//     new Student() { Id = 5, Name = "Mario", StandardId = 2},
+//     new Student() { Id = 6, Name = "Katia", StandardId = 7},
+//     new Student() { Id = 7, Name = "Bia", StandardId = 1},
+//     new Student() { Id = 8, Name = "Mirian"},
+//     new Student() { Id = 9, Name = "Anna", StandardId = 1},
+// };
+
+// IList<Standard> standards = new List<Standard>()
+// {
+//     new Standard() {StandardId = 1, StandardName = "Standard 1"},
+//     new Standard() {StandardId = 2, StandardName = "Standard 2"},
+//     new Standard() {StandardId = 3, StandardName = "Standard 3"},
+//     new Standard() {StandardId = 7, StandardName = "Standard 7"},
+//     new Standard() {StandardId = 12, StandardName = "Standard 12"},
+// };
+
+// var groupJoinMethod = standards.GroupJoin(
+//     students,
+//     student => student.StandardId,
+//     standard => standard.StandardId,
+//     (student, studentsGroup) => new
+//     {
+//         Students = studentsGroup,
+//         StandardName = student.StandardName
+//     }
+// );
+
+// var groupJoinQuery = from standard in standards
+//                      join student in students
+//                      on standard.StandardId equals student.StandardId
+//                      into studentGroup
+//                      select new
+//                      {
+//                          Students = studentGroup,
+//                          StandardName = standard.StandardName
+//                      };
+
+// foreach (var item in groupJoinMethod)
+// {
+//     Console.WriteLine(item.StandardName);
+
+//     foreach (var stud in item.Students)
+//         Console.WriteLine(stud.ToString());
+// }
+
+// Console.WriteLine();
+
+// foreach (var item in groupJoinQuery)
+// {
+//     Console.WriteLine(item.StandardName);
+
+//     foreach (var stud in item.Students)
+//         Console.WriteLine(stud.ToString());
+// }
+
+// class Student
+// {
+//     public int Id { get; set; }
+//     public string Name { get; set; }
+//     public int StandardId { get; set; }
+
+//     public override string ToString() => $"\t{Name}";
+// }
+
+// class Standard
+// {
+//     public int StandardId { get; set; }
+//     public string StandardName { get; set; }
+// }
+
+#endregion
+
+#region Query Operator: Select and SelectMany
 IList<Student> students = new List<Student>()
 {
-    new Student() { Id = 1, Name = "Karlos", StandardId = 1},
-    new Student() { Id = 2, Name = "Mary", StandardId = 3},
-    new Student() { Id = 3, Name = "Juca", StandardId = 2},
-    new Student() { Id = 4, Name = "Eduardo", StandardId = 12},
-    new Student() { Id = 5, Name = "Mario", StandardId = 2},
-    new Student() { Id = 6, Name = "Katia", StandardId = 7},
-    new Student() { Id = 7, Name = "Bia", StandardId = 1},
-    new Student() { Id = 8, Name = "Mirian"},
-    new Student() { Id = 9, Name = "Anna", StandardId = 1},
+    new Student() { Id = 1, Name = "John", Gender = "Male", Age = 25},
+    new Student() { Id = 2, Name = "Aaron", Gender = "Male", Age = 32},
+    new Student() { Id = 3, Name = "Karlos", Gender = "Male", Age = 17},
+    new Student() { Id = 3, Name = "Fabiana", Gender = "Male", Age = 19},
+    new Student() { Id = 4, Name = "Robert", Gender = "Male", Age = 28},
+    new Student() { Id = 5, Name = "Anny", Gender = "Female", Age = 23},
+    new Student() { Id = 6, Name = "Mary", Gender = "Female", Age = 46}
 };
 
-IList<Standard> standards = new List<Standard>()
-{
-    new Standard() {StandardId = 1, StandardName = "Standard 1"},
-    new Standard() {StandardId = 2, StandardName = "Standard 2"},
-    new Standard() {StandardId = 3, StandardName = "Standard 3"},
-    new Standard() {StandardId = 7, StandardName = "Standard 7"},
-    new Standard() {StandardId = 12, StandardName = "Standard 12"},
-};
+var listName = from student in students
+               select student.Name;
 
-var groupJoinMethod = standards.GroupJoin(
-    students,
-    student => student.StandardId,
-    standard => standard.StandardId,
-    (student, studentsGroup) => new
-    {
-        Students = studentsGroup,
-        StandardName = student.StandardName
-    }
-);
+var listNameAndGender = from student in students
+                        select new
+                        {
+                            Name = $"Hello, {student.Name}",
+                            Gender = student.Gender
+                        };
 
-var groupJoinQuery = from standard in standards
-                     join student in students
-                     on standard.StandardId equals student.StandardId
-                     into studentGroup
-                     select new
-                     {
-                         Students = studentGroup,
-                         StandardName = standard.StandardName
-                     };
+var listNameAndAge = students.Select(std => new { Name = $"My is {std.Name}", Age = std.Age });
 
-foreach (var item in groupJoinMethod)
-{
-    Console.WriteLine(item.StandardName);
+Console.WriteLine("Name: ");
+foreach (var name in listName)
+    Console.WriteLine($"\t{name}");
 
-    foreach (var stud in item.Students)
-        Console.WriteLine(stud.ToString());
-}
+Console.WriteLine("Name and Gender: ");
+foreach (var studInfo in listNameAndGender)
+    Console.WriteLine($"\t{studInfo.Name} - {studInfo.Gender}");
+
+Console.WriteLine("Name and Age: ");
+foreach (var studInfo in listNameAndAge)
+    Console.WriteLine($"\t{studInfo.Name} - {studInfo.Age}");
 
 Console.WriteLine();
+List<string> phrases = new() { "an apple a day", "the quick brown fox" };
 
-foreach (var item in groupJoinQuery)
-{
-    Console.WriteLine(item.StandardName);
+var query = from phrase in phrases
+            from word in phrase.Split(' ')
+            select word;
 
-    foreach (var stud in item.Students)
-        Console.WriteLine(stud.ToString());
-}
-
+foreach (string str in query)
+    Console.WriteLine(str);
 class Student
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public int StandardId { get; set; }
-
-    public override string ToString() => $"\t{Name}";
+    public string Gender { get; set; }
+    public int Age { get; set; }
 }
-
-class Standard
-{
-    public int StandardId { get; set; }
-    public string StandardName { get; set; }
-}
-
 #endregion
-
-
 
 
 
