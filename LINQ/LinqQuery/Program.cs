@@ -408,60 +408,81 @@
 #endregion
 
 #region Query Operator: Select and SelectMany
-IList<Student> students = new List<Student>()
-{
-    new Student() { Id = 1, Name = "John", Gender = "Male", Age = 25},
-    new Student() { Id = 2, Name = "Aaron", Gender = "Male", Age = 32},
-    new Student() { Id = 3, Name = "Karlos", Gender = "Male", Age = 17},
-    new Student() { Id = 3, Name = "Fabiana", Gender = "Male", Age = 19},
-    new Student() { Id = 4, Name = "Robert", Gender = "Male", Age = 28},
-    new Student() { Id = 5, Name = "Anny", Gender = "Female", Age = 23},
-    new Student() { Id = 6, Name = "Mary", Gender = "Female", Age = 46}
-};
+// IList<Student> students = new List<Student>()
+// {
+//     new Student() { Id = 1, Name = "John", Gender = "Male", Age = 25},
+//     new Student() { Id = 2, Name = "Aaron", Gender = "Male", Age = 32},
+//     new Student() { Id = 3, Name = "Karlos", Gender = "Male", Age = 17},
+//     new Student() { Id = 3, Name = "Fabiana", Gender = "Male", Age = 19},
+//     new Student() { Id = 4, Name = "Robert", Gender = "Male", Age = 28},
+//     new Student() { Id = 5, Name = "Anny", Gender = "Female", Age = 23},
+//     new Student() { Id = 6, Name = "Mary", Gender = "Female", Age = 46}
+// };
 
-var listName = from student in students
-               select student.Name;
+// var listName = from student in students
+//                select student.Name;
 
-var listNameAndGender = from student in students
-                        select new
-                        {
-                            Name = $"Hello, {student.Name}",
-                            Gender = student.Gender
-                        };
+// var listNameAndGender = from student in students
+//                         select new
+//                         {
+//                             Name = $"Hello, {student.Name}",
+//                             Gender = student.Gender
+//                         };
 
-var listNameAndAge = students.Select(std => new { Name = $"My is {std.Name}", Age = std.Age });
+// var listNameAndAge = students.Select(std => new { Name = $"My is {std.Name}", Age = std.Age });
 
-Console.WriteLine("Name: ");
-foreach (var name in listName)
-    Console.WriteLine($"\t{name}");
+// Console.WriteLine("Name: ");
+// foreach (var name in listName)
+//     Console.WriteLine($"\t{name}");
 
-Console.WriteLine("Name and Gender: ");
-foreach (var studInfo in listNameAndGender)
-    Console.WriteLine($"\t{studInfo.Name} - {studInfo.Gender}");
+// Console.WriteLine("Name and Gender: ");
+// foreach (var studInfo in listNameAndGender)
+//     Console.WriteLine($"\t{studInfo.Name} - {studInfo.Gender}");
 
-Console.WriteLine("Name and Age: ");
-foreach (var studInfo in listNameAndAge)
-    Console.WriteLine($"\t{studInfo.Name} - {studInfo.Age}");
+// Console.WriteLine("Name and Age: ");
+// foreach (var studInfo in listNameAndAge)
+//     Console.WriteLine($"\t{studInfo.Name} - {studInfo.Age}");
 
-Console.WriteLine();
-List<string> phrases = new() { "an apple a day", "the quick brown fox" };
+// Console.WriteLine();
+// List<string> phrases = new() { "an apple a day", "the quick brown fox" };
 
-var query = from phrase in phrases
-            from word in phrase.Split(' ')
-            select word;
+// var query = from phrase in phrases
+//             from word in phrase.Split(' ')
+//             select word;
 
-foreach (string str in query)
-    Console.WriteLine(str);
-class Student
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Gender { get; set; }
-    public int Age { get; set; }
-}
+// foreach (string str in query)
+//     Console.WriteLine(str);
+// class Student
+// {
+//     public int Id { get; set; }
+//     public string Name { get; set; }
+//     public string Gender { get; set; }
+//     public int Age { get; set; }
+// }
 #endregion
 
+#region Query Operator: All and Any
+IList<Student> students = new List<Student>()
+{
+    new Student("Juca", "Male", 39),
+    new Student("Mary", "Female", 12),
+    new Student("Nicole", "Female", 18),
+    new Student("Karlos", "Male", 43),
+    new Student("Eduardo", "Male", 17),
+};
 
+bool areAllStudentsTeenAger = students.All(e => e.Age > 12 && e.Age < 20);
+bool areAllStudentsMale = students.All(e => e.Gender.Equals("Male"));
+
+bool isAnyStudentTeenAger = students.Any(e => e.Age > 12 && e.Age < 20);
+bool isAnyStudentFemale = students.Any(e => e.Gender.Equals("Female"));
+
+Console.WriteLine($"{areAllStudentsTeenAger}\n{areAllStudentsMale}");
+Console.WriteLine($"{isAnyStudentTeenAger}\n{isAnyStudentFemale}");
+
+public record Student(string Name, string Gender, int Age);
+
+#endregion
 
 
 
