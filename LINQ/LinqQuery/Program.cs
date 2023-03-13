@@ -485,48 +485,88 @@
 #endregion
 
 #region Query Operator: Contains
-using System.Diagnostics.CodeAnalysis;
+// using System.Diagnostics.CodeAnalysis;
+
+// IList<Student> students = new List<Student>()
+// {
+//     new Student() {Id = 1, Name = "Karlos", Age = 57},
+//     new Student() {Id = 2, Name = "Anny", Age = 27},
+//     new Student() {Id = 3, Name = "Lucas", Age = 33},
+//     new Student() {Id = 4, Name = "Josh", Age = 16}
+// };
+
+// var stud = new Student() { Id = 1, Name = "Karlos" };
+
+// var hasStudent = students.Contains(stud, new StudentComparer());
+
+// Console.WriteLine(hasStudent);
+// class Student
+// {
+//     public int Id { get; set; }
+//     public string Name { get; set; }
+//     public int Age { get; set; }
+
+//     public override string ToString()
+//         => $"{Id}: {Name} - {Age}";
+// }
+
+// class StudentComparer : IEqualityComparer<Student>
+// {
+//     public bool Equals(Student? x, Student? y)
+//     {
+//         if (x?.Id == y?.Id && x?.Name == y?.Name)
+//             return true;
+
+//         return false;
+//     }
+
+//     public int GetHashCode([DisallowNull] Student obj)
+//         => obj.GetHashCode();
+// }
+#endregion
+
+#region Query Operator: Aggregate
+IList<string> strs = new List<string>()
+{
+    "Marcos", "Mary", "Josh", "Nicole", "Karlos"
+};
+
+var commaSeperatedString = strs.Aggregate((firstStr, secondStr) => $"{firstStr}, {secondStr}");
+Console.WriteLine(commaSeperatedString);
 
 IList<Student> students = new List<Student>()
 {
-    new Student() {Id = 1, Name = "Karlos", Age = 57},
-    new Student() {Id = 2, Name = "Anny", Age = 27},
-    new Student() {Id = 3, Name = "Lucas", Age = 33},
-    new Student() {Id = 4, Name = "Josh", Age = 16}
+    new Student("John", 23),
+    new Student("Moin", 51),
+    new Student("Ram", 19),
+    new Student("Ron", 34),
+    new Student("Bill", 47)
 };
 
-var stud = new Student() { Id = 1, Name = "Karlos" };
+var commaSeperatedStudentNames =
+    students.Aggregate<Student, string>(
+        "Student Names: ",
+        (str, stud) => str += $"{stud.Name}, "
+    );
 
-var hasStudent = students.Contains(stud, new StudentComparer());
+var commaSeperatedStudentNamesWithoutLastComma =
+    students.Aggregate<Student, string, string>(
+        string.Empty,
+        (str, stud) => str += $"{stud.Name}, ",
+        str => str.Substring(0, str.Length - 2)
+    );
 
-Console.WriteLine(hasStudent);
-class Student
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public int Age { get; set; }
+Console.WriteLine(commaSeperatedStudentNames);
+Console.WriteLine(commaSeperatedStudentNamesWithoutLastComma);
 
-    public override string ToString()
-        => $"{Id}: {Name} - {Age}";
-}
 
-class StudentComparer : IEqualityComparer<Student>
-{
-    public bool Equals(Student? x, Student? y)
-    {
-        if (x?.Id == y?.Id && x?.Name == y?.Name)
-            return true;
+var sumOfStudentsAge =
+    students.Aggregate<Student, int>(0, (totalAge, stud) => totalAge += stud.Age);
+Console.WriteLine(sumOfStudentsAge);
 
-        return false;
-    }
+public record Student(string Name, int Age);
 
-    public int GetHashCode([DisallowNull] Student obj)
-        => obj.GetHashCode();
-}
 #endregion
-
-
-
 
 
 
