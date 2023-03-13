@@ -462,29 +462,68 @@
 #endregion
 
 #region Query Operator: All and Any
-IList<Student> students = new List<Student>()
-{
-    new Student("Juca", "Male", 39),
-    new Student("Mary", "Female", 12),
-    new Student("Nicole", "Female", 18),
-    new Student("Karlos", "Male", 43),
-    new Student("Eduardo", "Male", 17),
-};
+// IList<Student> students = new List<Student>()
+// {
+//     new Student("Juca", "Male", 39),
+//     new Student("Mary", "Female", 12),
+//     new Student("Nicole", "Female", 18),
+//     new Student("Karlos", "Male", 43),
+//     new Student("Eduardo", "Male", 17),
+// };
 
-bool areAllStudentsTeenAger = students.All(e => e.Age > 12 && e.Age < 20);
-bool areAllStudentsMale = students.All(e => e.Gender.Equals("Male"));
+// bool areAllStudentsTeenAger = students.All(e => e.Age > 12 && e.Age < 20);
+// bool areAllStudentsMale = students.All(e => e.Gender.Equals("Male"));
 
-bool isAnyStudentTeenAger = students.Any(e => e.Age > 12 && e.Age < 20);
-bool isAnyStudentFemale = students.Any(e => e.Gender.Equals("Female"));
+// bool isAnyStudentTeenAger = students.Any(e => e.Age > 12 && e.Age < 20);
+// bool isAnyStudentFemale = students.Any(e => e.Gender.Equals("Female"));
 
-Console.WriteLine($"{areAllStudentsTeenAger}\n{areAllStudentsMale}");
-Console.WriteLine($"{isAnyStudentTeenAger}\n{isAnyStudentFemale}");
+// Console.WriteLine($"{areAllStudentsTeenAger}\n{areAllStudentsMale}");
+// Console.WriteLine($"{isAnyStudentTeenAger}\n{isAnyStudentFemale}");
 
-public record Student(string Name, string Gender, int Age);
+// public record Student(string Name, string Gender, int Age);
 
 #endregion
 
+#region Query Operator: Contains
+using System.Diagnostics.CodeAnalysis;
 
+IList<Student> students = new List<Student>()
+{
+    new Student() {Id = 1, Name = "Karlos", Age = 57},
+    new Student() {Id = 2, Name = "Anny", Age = 27},
+    new Student() {Id = 3, Name = "Lucas", Age = 33},
+    new Student() {Id = 4, Name = "Josh", Age = 16}
+};
+
+var stud = new Student() { Id = 1, Name = "Karlos" };
+
+var hasStudent = students.Contains(stud, new StudentComparer());
+
+Console.WriteLine(hasStudent);
+class Student
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public int Age { get; set; }
+
+    public override string ToString()
+        => $"{Id}: {Name} - {Age}";
+}
+
+class StudentComparer : IEqualityComparer<Student>
+{
+    public bool Equals(Student? x, Student? y)
+    {
+        if (x?.Id == y?.Id && x?.Name == y?.Name)
+            return true;
+
+        return false;
+    }
+
+    public int GetHashCode([DisallowNull] Student obj)
+        => obj.GetHashCode();
+}
+#endregion
 
 
 
