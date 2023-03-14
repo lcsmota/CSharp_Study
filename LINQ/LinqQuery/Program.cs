@@ -526,47 +526,95 @@
 #endregion
 
 #region Query Operator: Aggregate
-IList<string> strs = new List<string>()
-{
-    "Marcos", "Mary", "Josh", "Nicole", "Karlos"
-};
+// IList<string> strs = new List<string>()
+// {
+//     "Marcos", "Mary", "Josh", "Nicole", "Karlos"
+// };
 
-var commaSeperatedString = strs.Aggregate((firstStr, secondStr) => $"{firstStr}, {secondStr}");
-Console.WriteLine(commaSeperatedString);
+// var commaSeperatedString = strs.Aggregate((firstStr, secondStr) => $"{firstStr}, {secondStr}");
+// Console.WriteLine(commaSeperatedString);
 
-IList<Student> students = new List<Student>()
-{
-    new Student("John", 23),
-    new Student("Moin", 51),
-    new Student("Ram", 19),
-    new Student("Ron", 34),
-    new Student("Bill", 47)
-};
+// IList<Student> students = new List<Student>()
+// {
+//     new Student("John", 23),
+//     new Student("Moin", 51),
+//     new Student("Ram", 19),
+//     new Student("Ron", 34),
+//     new Student("Bill", 47)
+// };
 
-var commaSeperatedStudentNames =
-    students.Aggregate<Student, string>(
-        "Student Names: ",
-        (str, stud) => str += $"{stud.Name}, "
-    );
+// var commaSeperatedStudentNames =
+//     students.Aggregate<Student, string>(
+//         "Student Names: ",
+//         (str, stud) => str += $"{stud.Name}, "
+//     );
 
-var commaSeperatedStudentNamesWithoutLastComma =
-    students.Aggregate<Student, string, string>(
-        string.Empty,
-        (str, stud) => str += $"{stud.Name}, ",
-        str => str.Substring(0, str.Length - 2)
-    );
+// var commaSeperatedStudentNamesWithoutLastComma =
+//     students.Aggregate<Student, string, string>(
+//         string.Empty,
+//         (str, stud) => str += $"{stud.Name}, ",
+//         str => str.Substring(0, str.Length - 2)
+//     );
 
-Console.WriteLine(commaSeperatedStudentNames);
-Console.WriteLine(commaSeperatedStudentNamesWithoutLastComma);
+// Console.WriteLine(commaSeperatedStudentNames);
+// Console.WriteLine(commaSeperatedStudentNamesWithoutLastComma);
 
 
-var sumOfStudentsAge =
-    students.Aggregate<Student, int>(0, (totalAge, stud) => totalAge += stud.Age);
-Console.WriteLine(sumOfStudentsAge);
+// var sumOfStudentsAge =
+//     students.Aggregate<Student, int>(0, (totalAge, stud) => totalAge += stud.Age);
+// Console.WriteLine(sumOfStudentsAge);
 
-public record Student(string Name, int Age);
+// public record Student(string Name, int Age);
 
 #endregion
 
+#region Query Operator: Average, Count, Max and Sum
+IList<Person> people = new List<Person>()
+{
+    new Person() {Name = "Karlos", Age = 25},
+    new Person() {Name = "Mary", Age = 33},
+    new Person() {Name = "Juca", Age = 42},
+    new Person() {Name = "Eduardo", Age = 49},
+    new Person() {Name = "Anny", Age = 16}
+};
 
+var avgAge = people.Average(e => e.Age);
 
+var totalPeople = people.Count();
+var adult = people.Count(e => e.Age > 18);
+
+var totalAge = (from person in people
+                select person.Age).Count();
+
+var oldest = people.Max(e => e.Age);
+var personWithLongName = people.Max();
+
+var sumOfAge = people.Sum(e => e.Age);
+var numOfTeenAger = people.Sum(e =>
+{
+    return e.Age > 12 && e.Age < 20
+        ? 1
+        : default;
+});
+
+Console.WriteLine($"Total age: {totalAge}");
+Console.WriteLine($"Average age: {avgAge}");
+Console.WriteLine($"Total of people: {totalPeople}");
+Console.WriteLine($"Total of Adult: {adult}");
+Console.WriteLine($"Oldest person age: {oldest}");
+Console.WriteLine($"Person with long name: {personWithLongName?.Name}");
+Console.WriteLine($"Total of teen: {numOfTeenAger}");
+Console.WriteLine($"Sum of age: {sumOfAge}");
+class Person : IComparable<Person>
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+
+    public int CompareTo(Person? other)
+    {
+        return this.Name.Length > other?.Name.Length
+            ? 1
+            : default;
+    }
+}
+#endregion
