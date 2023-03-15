@@ -634,19 +634,32 @@
 #endregion
 
 #region Query Operator: First and FirstOrDefault
-IList<int> numbers = new List<int>() { 43, 767, 121, 89, 56, 234, 568, 93 };
-IList<string> names = new List<string>() { "Juca", "null", "Robert", "Karlos", "Joana", "John", default };
+// IList<int> numbers = new List<int>() { 43, 767, 121, 89, 56, 234, 568, 93 };
+// IList<string> names = new List<string>() { "Juca", "null", "Robert", "Karlos", "Joana", "John", default };
 
-Console.WriteLine($"1st element in numbers: {numbers.First()}");
-Console.WriteLine($"1st even element in numbers: {numbers.First(x => x % 2 == 0)}");
+// Console.WriteLine($"1st element in numbers: {numbers.First()}");
+// Console.WriteLine($"1st even element in numbers: {numbers.First(x => x % 2 == 0)}");
 
-Console.WriteLine($"1st element in names: {names.First()}");
+// Console.WriteLine($"1st element in names: {names.First()}");
 
-Console.WriteLine($"1st element which is greater than 500 in numbers: {numbers.FirstOrDefault(x => x > 500)}");
-Console.WriteLine($"1st element contain 's' in names: {names.FirstOrDefault(x => x.Contains("s"))}");
+// Console.WriteLine($"1st element which is greater than 500 in numbers: {numbers.FirstOrDefault(x => x > 500)}");
+// Console.WriteLine($"1st element contain 's' in names: {names.FirstOrDefault(x => x.Contains("s"))}");
 #endregion
 
+#region Query operator: Last and LastOrDefault
+IList<int> numbers = new List<int>() { 43, 767, 121, 89, 56, 234, 568, 93, 879, 1024, 87 };
+IList<string> names = new List<string>() { "Juca", "Eduardo", "Robert", "Karlos", "Joana", "John", "Lucas" };
 
+Console.WriteLine($"Last element in numbers: {numbers.Last()}");
+Console.WriteLine($"Last even element in numbers: {numbers.Last(x => x % 2 == 0)}");
+
+Console.WriteLine($"Last element in names: {names.Last()}");
+
+Console.WriteLine($"Last element which is greater than 500 in numbers: {numbers.LastOrDefault(x => x > 500)}");
+Console.WriteLine($"Last element contain 'o' in names: {names.LastOrDefault(x => x.Contains("o"))}");
+Console.WriteLine($"Last element contain 'T' in names: {names.LastOrDefault(x => x.Contains("T"))}");
+
+#endregion
 
 
 
