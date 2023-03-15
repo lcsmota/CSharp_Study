@@ -620,23 +620,31 @@
 #endregion
 
 #region Query Operator: ElementAt and ElementAtOrDefault
-IList<int> intList = new List<int>() { 12, 34, 54, 76, 87, 98, 29 };
-IList<string> intString = new List<string>() { "One", "Seven", "Four", "Five", "Nine", "Eight" };
+// IList<int> intList = new List<int>() { 12, 34, 54, 76, 87, 98, 29 };
+// IList<string> intString = new List<string>() { "One", "Seven", "Four", "Five", "Nine", "Eight" };
 
-Console.WriteLine($"1st element in intList: {intList.ElementAt(0)}");
-Console.WriteLine($"1st element in intString: {intString.ElementAt(0)}");
+// Console.WriteLine($"1st element in intList: {intList.ElementAt(0)}");
+// Console.WriteLine($"1st element in intString: {intString.ElementAt(0)}");
 
-Console.WriteLine($"2nd element in intList: {intList.ElementAt(1)}");
-Console.WriteLine($"2nd element in intString: {intString.ElementAt(1)}");
+// Console.WriteLine($"2nd element in intList: {intList.ElementAt(1)}");
+// Console.WriteLine($"2nd element in intString: {intString.ElementAt(1)}");
 
-Console.WriteLine($"10th element in intList: {intList.ElementAtOrDefault(9)}");
-Console.WriteLine($"10th element in intString: {intString.ElementAtOrDefault(9)}");
+// Console.WriteLine($"10th element in intList: {intList.ElementAtOrDefault(9)}");
+// Console.WriteLine($"10th element in intString: {intString.ElementAtOrDefault(9)}");
 #endregion
 
+#region Query Operator: First and FirstOrDefault
+IList<int> numbers = new List<int>() { 43, 767, 121, 89, 56, 234, 568, 93 };
+IList<string> names = new List<string>() { "Juca", "null", "Robert", "Karlos", "Joana", "John", default };
 
+Console.WriteLine($"1st element in numbers: {numbers.First()}");
+Console.WriteLine($"1st even element in numbers: {numbers.First(x => x % 2 == 0)}");
 
+Console.WriteLine($"1st element in names: {names.First()}");
 
-
+Console.WriteLine($"1st element which is greater than 500 in numbers: {numbers.FirstOrDefault(x => x > 500)}");
+Console.WriteLine($"1st element contain 's' in names: {names.FirstOrDefault(x => x.Contains("s"))}");
+#endregion
 
 
 
