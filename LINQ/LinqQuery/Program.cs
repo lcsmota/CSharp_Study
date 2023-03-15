@@ -569,52 +569,111 @@
 #endregion
 
 #region Query Operator: Average, Count, Max and Sum
-IList<Person> people = new List<Person>()
-{
-    new Person() {Name = "Karlos", Age = 25},
-    new Person() {Name = "Mary", Age = 33},
-    new Person() {Name = "Juca", Age = 42},
-    new Person() {Name = "Eduardo", Age = 49},
-    new Person() {Name = "Anny", Age = 16}
-};
+// IList<Person> people = new List<Person>()
+// {
+//     new Person() {Name = "Karlos", Age = 25},
+//     new Person() {Name = "Mary", Age = 33},
+//     new Person() {Name = "Juca", Age = 42},
+//     new Person() {Name = "Eduardo", Age = 49},
+//     new Person() {Name = "Anny", Age = 16}
+// };
 
-var avgAge = people.Average(e => e.Age);
+// var avgAge = people.Average(e => e.Age);
 
-var totalPeople = people.Count();
-var adult = people.Count(e => e.Age > 18);
+// var totalPeople = people.Count();
+// var adult = people.Count(e => e.Age > 18);
 
-var totalAge = (from person in people
-                select person.Age).Count();
+// var totalAge = (from person in people
+//                 select person.Age).Count();
 
-var oldest = people.Max(e => e.Age);
-var personWithLongName = people.Max();
+// var oldest = people.Max(e => e.Age);
+// var personWithLongName = people.Max();
 
-var sumOfAge = people.Sum(e => e.Age);
-var numOfTeenAger = people.Sum(e =>
-{
-    return e.Age > 12 && e.Age < 20
-        ? 1
-        : default;
-});
+// var sumOfAge = people.Sum(e => e.Age);
+// var numOfTeenAger = people.Sum(e =>
+// {
+//     return e.Age > 12 && e.Age < 20
+//         ? 1
+//         : default;
+// });
 
-Console.WriteLine($"Total age: {totalAge}");
-Console.WriteLine($"Average age: {avgAge}");
-Console.WriteLine($"Total of people: {totalPeople}");
-Console.WriteLine($"Total of Adult: {adult}");
-Console.WriteLine($"Oldest person age: {oldest}");
-Console.WriteLine($"Person with long name: {personWithLongName?.Name}");
-Console.WriteLine($"Total of teen: {numOfTeenAger}");
-Console.WriteLine($"Sum of age: {sumOfAge}");
-class Person : IComparable<Person>
-{
-    public string Name { get; set; }
-    public int Age { get; set; }
+// Console.WriteLine($"Total age: {totalAge}");
+// Console.WriteLine($"Average age: {avgAge}");
+// Console.WriteLine($"Total of people: {totalPeople}");
+// Console.WriteLine($"Total of Adult: {adult}");
+// Console.WriteLine($"Oldest person age: {oldest}");
+// Console.WriteLine($"Person with long name: {personWithLongName?.Name}");
+// Console.WriteLine($"Total of teen: {numOfTeenAger}");
+// Console.WriteLine($"Sum of age: {sumOfAge}");
+// class Person : IComparable<Person>
+// {
+//     public string Name { get; set; }
+//     public int Age { get; set; }
 
-    public int CompareTo(Person? other)
-    {
-        return this.Name.Length > other?.Name.Length
-            ? 1
-            : default;
-    }
-}
+//     public int CompareTo(Person? other)
+//     {
+//         return this.Name.Length > other?.Name.Length
+//             ? 1
+//             : default;
+//     }
+// }
 #endregion
+
+#region Query Operator: ElementAt and ElementAtOrDefault
+IList<int> intList = new List<int>() { 12, 34, 54, 76, 87, 98, 29 };
+IList<string> intString = new List<string>() { "One", "Seven", "Four", "Five", "Nine", "Eight" };
+
+Console.WriteLine($"1st element in intList: {intList.ElementAt(0)}");
+Console.WriteLine($"1st element in intString: {intString.ElementAt(0)}");
+
+Console.WriteLine($"2nd element in intList: {intList.ElementAt(1)}");
+Console.WriteLine($"2nd element in intString: {intString.ElementAt(1)}");
+
+Console.WriteLine($"10th element in intList: {intList.ElementAtOrDefault(9)}");
+Console.WriteLine($"10th element in intString: {intString.ElementAtOrDefault(9)}");
+#endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
