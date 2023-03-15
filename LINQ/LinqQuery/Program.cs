@@ -647,21 +647,31 @@
 #endregion
 
 #region Query operator: Last and LastOrDefault
-IList<int> numbers = new List<int>() { 43, 767, 121, 89, 56, 234, 568, 93, 879, 1024, 87 };
-IList<string> names = new List<string>() { "Juca", "Eduardo", "Robert", "Karlos", "Joana", "John", "Lucas" };
+// IList<int> numbers = new List<int>() { 43, 767, 121, 89, 56, 234, 568, 93, 879, 1024, 87 };
+// IList<string> names = new List<string>() { "Juca", "Eduardo", "Robert", "Karlos", "Joana", "John", "Lucas" };
 
-Console.WriteLine($"Last element in numbers: {numbers.Last()}");
-Console.WriteLine($"Last even element in numbers: {numbers.Last(x => x % 2 == 0)}");
+// Console.WriteLine($"Last element in numbers: {numbers.Last()}");
+// Console.WriteLine($"Last even element in numbers: {numbers.Last(x => x % 2 == 0)}");
 
-Console.WriteLine($"Last element in names: {names.Last()}");
+// Console.WriteLine($"Last element in names: {names.Last()}");
 
-Console.WriteLine($"Last element which is greater than 500 in numbers: {numbers.LastOrDefault(x => x > 500)}");
-Console.WriteLine($"Last element contain 'o' in names: {names.LastOrDefault(x => x.Contains("o"))}");
-Console.WriteLine($"Last element contain 'T' in names: {names.LastOrDefault(x => x.Contains("T"))}");
+// Console.WriteLine($"Last element which is greater than 500 in numbers: {numbers.LastOrDefault(x => x > 500)}");
+// Console.WriteLine($"Last element contain 'o' in names: {names.LastOrDefault(x => x.Contains("o"))}");
+// Console.WriteLine($"Last element contain 'T' in names: {names.LastOrDefault(x => x.Contains("T"))}");
 
 #endregion
 
+#region Query operator: Single and SingleOrDefault
+List<int> oneElement = new() { 26 };
+IList<int> numbers = new List<int>() { 43, 767, 121, 89, 56, 234, 568, 93, 879, 1024, 87, 8, 3 };
+IList<string> names = new List<string>() { "Juca", "Eduardo", "Robert", "Karlos", "Joana", "John", "Lucas", "Ram", "Bill", "Thaunny" };
 
+Console.WriteLine($"The only element in oneElement: {oneElement.Single()}");
+Console.WriteLine($"The only element which is less than 5 in numbers: {numbers.SingleOrDefault(x => x < 5)}");
+Console.WriteLine($"The only element which is greater than 1000 in numbers: {numbers.SingleOrDefault(x => x > 1000)}");
+
+Console.WriteLine($"The only element contain 'T' in names: {names.SingleOrDefault(x => x.Contains("T"))}");
+#endregion
 
 
 
