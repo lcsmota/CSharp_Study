@@ -730,44 +730,56 @@
 #endregion
 
 #region Query Operator: Concat
-IList<string> names1 = new List<string>() { "Mary", "John", "Ricardo", "Katia" };
-IList<string> names2 = new List<string>() { "Juca", "Lucas", "Robert", "Allyson" };
+// IList<string> names1 = new List<string>() { "Mary", "John", "Ricardo", "Katia" };
+// IList<string> names2 = new List<string>() { "Juca", "Lucas", "Robert", "Allyson" };
 
-var collectionOfNames = names1.Concat(names2);
+// var collectionOfNames = names1.Concat(names2);
 
-foreach (var name in collectionOfNames)
-    Console.WriteLine($"Hello, {name}.");
+// foreach (var name in collectionOfNames)
+//     Console.WriteLine($"Hello, {name}.");
 
-IList<Student> listOfStudents1 = new List<Student>()
-{
-    new Student() { Name = "John", Age = 31},
-    new Student() { Name = "Kathia", Age = 42},
-    new Student() { Name = "Josh", Age = 39},
-    new Student() { Name = "Maria", Age = 27}
-};
+// IList<Student> listOfStudents1 = new List<Student>()
+// {
+//     new Student() { Name = "John", Age = 31},
+//     new Student() { Name = "Kathia", Age = 42},
+//     new Student() { Name = "Josh", Age = 39},
+//     new Student() { Name = "Maria", Age = 27}
+// };
 
-IList<Student> listOfStudents2 = new List<Student>()
-{
-    new Student() { Name = "Karlos", Age = 33},
-    new Student() { Name = "Eduardo", Age = 29},
-    new Student() { Name = "Rodrigo", Age = 56},
-    new Student() { Name = "Yanny", Age = 17}
-};
+// IList<Student> listOfStudents2 = new List<Student>()
+// {
+//     new Student() { Name = "Karlos", Age = 33},
+//     new Student() { Name = "Eduardo", Age = 29},
+//     new Student() { Name = "Rodrigo", Age = 56},
+//     new Student() { Name = "Yanny", Age = 17}
+// };
 
-var students = listOfStudents1.Concat(listOfStudents2);
-foreach (var stud in students)
-    Console.WriteLine(stud.ToString());
-class Student
-{
-    public string Name { get; set; }
-    public int Age { get; set; }
+// var students = listOfStudents1.Concat(listOfStudents2);
+// foreach (var stud in students)
+//     Console.WriteLine(stud.ToString());
+// class Student
+// {
+//     public string Name { get; set; }
+//     public int Age { get; set; }
 
-    public override string ToString()
-        => $"My name is {Name} and I'm {Age} years old.";
-}
+//     public override string ToString()
+//         => $"My name is {Name} and I'm {Age} years old.";
+// }
 #endregion
 
+#region Query Operator: DefaultIfEmpty
+IList<string> emptyList = new List<string>();
 
+var newList1 = emptyList.DefaultIfEmpty();
+var newList2 = emptyList.DefaultIfEmpty("None");
+
+Console.WriteLine($"Count: {newList1.Count()}");
+Console.WriteLine($"Value: {newList1.ElementAt(0)}");
+
+Console.WriteLine($"Count: {newList2.Count()}");
+Console.WriteLine($"Value: {newList2.ElementAt(0)}");
+
+#endregion
 
 
 
