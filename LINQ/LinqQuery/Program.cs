@@ -662,18 +662,72 @@
 #endregion
 
 #region Query operator: Single and SingleOrDefault
-List<int> oneElement = new() { 26 };
-IList<int> numbers = new List<int>() { 43, 767, 121, 89, 56, 234, 568, 93, 879, 1024, 87, 8, 3 };
-IList<string> names = new List<string>() { "Juca", "Eduardo", "Robert", "Karlos", "Joana", "John", "Lucas", "Ram", "Bill", "Thaunny" };
+// List<int> oneElement = new() { 26 };
+// IList<int> numbers = new List<int>() { 43, 767, 121, 89, 56, 234, 568, 93, 879, 1024, 87, 8, 3 };
+// IList<string> names = new List<string>() { "Juca", "Eduardo", "Robert", "Karlos", "Joana", "John", "Lucas", "Ram", "Bill", "Thaunny" };
 
-Console.WriteLine($"The only element in oneElement: {oneElement.Single()}");
-Console.WriteLine($"The only element which is less than 5 in numbers: {numbers.SingleOrDefault(x => x < 5)}");
-Console.WriteLine($"The only element which is greater than 1000 in numbers: {numbers.SingleOrDefault(x => x > 1000)}");
+// Console.WriteLine($"The only element in oneElement: {oneElement.Single()}");
+// Console.WriteLine($"The only element which is less than 5 in numbers: {numbers.SingleOrDefault(x => x < 5)}");
+// Console.WriteLine($"The only element which is greater than 1000 in numbers: {numbers.SingleOrDefault(x => x > 1000)}");
 
-Console.WriteLine($"The only element contain 'T' in names: {names.SingleOrDefault(x => x.Contains("T"))}");
+// Console.WriteLine($"The only element contain 'T' in names: {names.SingleOrDefault(x => x.Contains("T"))}");
 #endregion
 
+#region Query operator: SequenceEqual
+using System.Diagnostics.CodeAnalysis;
 
+Student std1 = new("John", 25);
+Student std2 = new("Anny", 23);
+
+IList<Student> studentListOne = new List<Student>() { std1, std2 };
+IList<Student> studentListTwo = new List<Student>() { std1, std2 };
+
+bool isEqual = studentListOne.SequenceEqual(studentListTwo);
+Console.WriteLine($"studentListOne == studentListTwo: {isEqual}");
+
+Student std3 = new("Mary", 45);
+Student std4 = new("Karlos", 19);
+
+IList<Student> studentListThree = new List<Student>() { std3 };
+IList<Student> studentListFour = new List<Student>() { std4 };
+
+isEqual = studentListThree.SequenceEqual(studentListFour);
+Console.WriteLine($"studentListThree == studentListFour: {isEqual}");
+
+IList<Student> listOfStudents1 = new List<Student>()
+{
+    new Student("Josh", 56),
+    new Student("Lucas", 27),
+    new Student("Eduardo", 22),
+    new Student("Igor", 17)
+};
+
+IList<Student> listOfStudents2 = new List<Student>()
+{
+    new Student("Josh", 56),
+    new Student("Lucas", 27),
+    new Student("Eduardo", 22),
+    new Student("Igor", 17)
+};
+
+isEqual = listOfStudents1.SequenceEqual(listOfStudents2, new StudentComparer());
+Console.WriteLine($"listOfStudents1 == listOfStudents2: {isEqual}");
+
+
+public record Student(string Name, int Age);
+class StudentComparer : IEqualityComparer<Student>
+{
+    public bool Equals(Student? x, Student? y)
+    {
+        if (x?.Name == y?.Name) return true;
+
+        return false;
+    }
+
+    public int GetHashCode([DisallowNull] Student obj)
+        => obj.GetHashCode();
+}
+#endregion
 
 
 
