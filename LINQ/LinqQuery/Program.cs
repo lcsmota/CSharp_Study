@@ -768,20 +768,42 @@
 #endregion
 
 #region Query Operator: DefaultIfEmpty
-IList<string> emptyList = new List<string>();
+// IList<string> emptyList = new List<string>();
 
-var newList1 = emptyList.DefaultIfEmpty();
-var newList2 = emptyList.DefaultIfEmpty("None");
+// var newList1 = emptyList.DefaultIfEmpty();
+// var newList2 = emptyList.DefaultIfEmpty("None");
 
-Console.WriteLine($"Count: {newList1.Count()}");
-Console.WriteLine($"Value: {newList1.ElementAt(0)}");
+// Console.WriteLine($"Count: {newList1.Count()}");
+// Console.WriteLine($"Value: {newList1.ElementAt(0)}");
 
-Console.WriteLine($"Count: {newList2.Count()}");
-Console.WriteLine($"Value: {newList2.ElementAt(0)}");
+// Console.WriteLine($"Count: {newList2.Count()}");
+// Console.WriteLine($"Value: {newList2.ElementAt(0)}");
 
 #endregion
 
+#region Query Operator: Empty, Range and Repeat
+var emptyCollection1 = Enumerable.Empty<string>();
+var emptyCollection2 = Enumerable.Empty<bool>();
 
+Console.WriteLine($"Count: {emptyCollection1.Count()}");
+Console.WriteLine($"Type: {emptyCollection1.GetType().Name}");
+
+Console.WriteLine($"Count: {emptyCollection2.Count()}");
+Console.WriteLine($"Type: {emptyCollection2.GetType().Name}");
+
+var intCollection = Enumerable.Range(10, 9);
+Console.WriteLine($"Total count: {intCollection.Count()}");
+
+for (int i = 0; i < intCollection.Count(); i++)
+    Console.WriteLine($"Value at index {i}: {intCollection.ElementAt(i)}");
+
+var strCollection = Enumerable.Repeat("Never give up!", 3);
+Console.WriteLine($"Total count: {strCollection.Count()}");
+
+for (int i = 0; i < strCollection.Count(); i++)
+    Console.WriteLine($"Value at index {i}: {strCollection.ElementAt(i)}");
+
+#endregion
 
 
 
