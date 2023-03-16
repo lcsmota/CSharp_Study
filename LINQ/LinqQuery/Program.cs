@@ -646,7 +646,7 @@
 // Console.WriteLine($"1st element contain 's' in names: {names.FirstOrDefault(x => x.Contains("s"))}");
 #endregion
 
-#region Query operator: Last and LastOrDefault
+#region Query Operator: Last and LastOrDefault
 // IList<int> numbers = new List<int>() { 43, 767, 121, 89, 56, 234, 568, 93, 879, 1024, 87 };
 // IList<string> names = new List<string>() { "Juca", "Eduardo", "Robert", "Karlos", "Joana", "John", "Lucas" };
 
@@ -661,7 +661,7 @@
 
 #endregion
 
-#region Query operator: Single and SingleOrDefault
+#region Query Operator: Single and SingleOrDefault
 // List<int> oneElement = new() { 26 };
 // IList<int> numbers = new List<int>() { 43, 767, 121, 89, 56, 234, 568, 93, 879, 1024, 87, 8, 3 };
 // IList<string> names = new List<string>() { "Juca", "Eduardo", "Robert", "Karlos", "Joana", "John", "Lucas", "Ram", "Bill", "Thaunny" };
@@ -673,63 +673,99 @@
 // Console.WriteLine($"The only element contain 'T' in names: {names.SingleOrDefault(x => x.Contains("T"))}");
 #endregion
 
-#region Query operator: SequenceEqual
-using System.Diagnostics.CodeAnalysis;
+#region Query Operator: SequenceEqual
+// using System.Diagnostics.CodeAnalysis;
 
-Student std1 = new("John", 25);
-Student std2 = new("Anny", 23);
+// Student std1 = new("John", 25);
+// Student std2 = new("Anny", 23);
 
-IList<Student> studentListOne = new List<Student>() { std1, std2 };
-IList<Student> studentListTwo = new List<Student>() { std1, std2 };
+// IList<Student> studentListOne = new List<Student>() { std1, std2 };
+// IList<Student> studentListTwo = new List<Student>() { std1, std2 };
 
-bool isEqual = studentListOne.SequenceEqual(studentListTwo);
-Console.WriteLine($"studentListOne == studentListTwo: {isEqual}");
+// bool isEqual = studentListOne.SequenceEqual(studentListTwo);
+// Console.WriteLine($"studentListOne == studentListTwo: {isEqual}");
 
-Student std3 = new("Mary", 45);
-Student std4 = new("Karlos", 19);
+// Student std3 = new("Mary", 45);
+// Student std4 = new("Karlos", 19);
 
-IList<Student> studentListThree = new List<Student>() { std3 };
-IList<Student> studentListFour = new List<Student>() { std4 };
+// IList<Student> studentListThree = new List<Student>() { std3 };
+// IList<Student> studentListFour = new List<Student>() { std4 };
 
-isEqual = studentListThree.SequenceEqual(studentListFour);
-Console.WriteLine($"studentListThree == studentListFour: {isEqual}");
+// isEqual = studentListThree.SequenceEqual(studentListFour);
+// Console.WriteLine($"studentListThree == studentListFour: {isEqual}");
+
+// IList<Student> listOfStudents1 = new List<Student>()
+// {
+//     new Student("Josh", 56),
+//     new Student("Lucas", 27),
+//     new Student("Eduardo", 22),
+//     new Student("Igor", 17)
+// };
+
+// IList<Student> listOfStudents2 = new List<Student>()
+// {
+//     new Student("Josh", 56),
+//     new Student("Lucas", 27),
+//     new Student("Eduardo", 22),
+//     new Student("Igor", 17)
+// };
+
+// isEqual = listOfStudents1.SequenceEqual(listOfStudents2, new StudentComparer());
+// Console.WriteLine($"listOfStudents1 == listOfStudents2: {isEqual}");
+
+
+// public record Student(string Name, int Age);
+// class StudentComparer : IEqualityComparer<Student>
+// {
+//     public bool Equals(Student? x, Student? y)
+//     {
+//         if (x?.Name == y?.Name) return true;
+
+//         return false;
+//     }
+
+//     public int GetHashCode([DisallowNull] Student obj)
+//         => obj.GetHashCode();
+// }
+#endregion
+
+#region Query Operator: Concat
+IList<string> names1 = new List<string>() { "Mary", "John", "Ricardo", "Katia" };
+IList<string> names2 = new List<string>() { "Juca", "Lucas", "Robert", "Allyson" };
+
+var collectionOfNames = names1.Concat(names2);
+
+foreach (var name in collectionOfNames)
+    Console.WriteLine($"Hello, {name}.");
 
 IList<Student> listOfStudents1 = new List<Student>()
 {
-    new Student("Josh", 56),
-    new Student("Lucas", 27),
-    new Student("Eduardo", 22),
-    new Student("Igor", 17)
+    new Student() { Name = "John", Age = 31},
+    new Student() { Name = "Kathia", Age = 42},
+    new Student() { Name = "Josh", Age = 39},
+    new Student() { Name = "Maria", Age = 27}
 };
 
 IList<Student> listOfStudents2 = new List<Student>()
 {
-    new Student("Josh", 56),
-    new Student("Lucas", 27),
-    new Student("Eduardo", 22),
-    new Student("Igor", 17)
+    new Student() { Name = "Karlos", Age = 33},
+    new Student() { Name = "Eduardo", Age = 29},
+    new Student() { Name = "Rodrigo", Age = 56},
+    new Student() { Name = "Yanny", Age = 17}
 };
 
-isEqual = listOfStudents1.SequenceEqual(listOfStudents2, new StudentComparer());
-Console.WriteLine($"listOfStudents1 == listOfStudents2: {isEqual}");
-
-
-public record Student(string Name, int Age);
-class StudentComparer : IEqualityComparer<Student>
+var students = listOfStudents1.Concat(listOfStudents2);
+foreach (var stud in students)
+    Console.WriteLine(stud.ToString());
+class Student
 {
-    public bool Equals(Student? x, Student? y)
-    {
-        if (x?.Name == y?.Name) return true;
+    public string Name { get; set; }
+    public int Age { get; set; }
 
-        return false;
-    }
-
-    public int GetHashCode([DisallowNull] Student obj)
-        => obj.GetHashCode();
+    public override string ToString()
+        => $"My name is {Name} and I'm {Age} years old.";
 }
 #endregion
-
-
 
 
 
