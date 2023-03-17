@@ -807,50 +807,110 @@
 
 #region Query Operator: Distinct
 
+// using System.Diagnostics.CodeAnalysis;
+
+// IList<Student> students = new List<Student>()
+// {
+//     new Student() { Id = 1, Name = "Juca", Age = 22},
+//     new Student() { Id = 2, Name = "Mary", Age = 33},
+//     new Student() { Id = 3, Name = "Karlos", Age = 19},
+//     new Student() { Id = 2, Name = "Mary", Age = 33},
+//     new Student() { Id = 5, Name = "Kathia", Age = 27},
+//     new Student() { Id = 1, Name = "Juca", Age = 22},
+//     new Student() { Id = 7, Name = "Mary", Age = 59}
+// };
+
+// var distinctStudents = students.Distinct(new StudentComparer());
+
+// foreach (var stud in distinctStudents)
+//     System.Console.WriteLine(stud.ToString());
+
+// class Student
+// {
+//     public int Id { get; set; }
+//     public string Name { get; set; }
+//     public int Age { get; set; }
+
+//     public override string ToString()
+//         => $"{Id}: {Name} - {Age}";
+// }
+
+// class StudentComparer : IEqualityComparer<Student>
+// {
+//     public bool Equals(Student? x, Student? y)
+//     {
+//         if (x?.Id == y?.Id && x?.Name.ToLower() == y?.Name.ToLower())
+//             return true;
+
+//         return false;
+//     }
+
+//     public int GetHashCode([DisallowNull] Student obj)
+//         => obj.Id.GetHashCode();
+// }
+#endregion
+
+#region Query Operator: Except
+
 using System.Diagnostics.CodeAnalysis;
 
-IList<Student> students = new List<Student>()
+List<Person> firstGroup = new()
 {
-    new Student() { Id = 1, Name = "Juca", Age = 22},
-    new Student() { Id = 2, Name = "Mary", Age = 33},
-    new Student() { Id = 3, Name = "Karlos", Age = 19},
-    new Student() { Id = 2, Name = "Mary", Age = 33},
-    new Student() { Id = 5, Name = "Kathia", Age = 27},
-    new Student() { Id = 1, Name = "Juca", Age = 22},
-    new Student() { Id = 7, Name = "Mary", Age = 59}
+    new Person() {Document = "132456", Name = "Karlos", Gender = "Male", Age = 26},
+    new Person() {Document = "982452", Name = "Mary", Gender = "Female", Age = 22},
+    new Person() {Document = "234241", Name = "Eduardo", Gender = "Male", Age = 19},
+    new Person() {Document = "672456", Name = "Kathia", Gender = "Female", Age = 32},
+    new Person() {Document = "882453", Name = "Anny", Gender = "Female", Age = 38},
+    new Person() {Document = "992455", Name = "Beatriz", Gender = "Female", Age = 41}
 };
 
-var distinctStudents = students.Distinct(new StudentComparer());
-
-foreach (var stud in distinctStudents)
-    System.Console.WriteLine(stud.ToString());
-
-class Student
+List<Person> secondGroup = new()
 {
-    public int Id { get; set; }
+    new Person() {Document = "132466", Name = "Ronaldo", Gender = "Male", Age = 29},
+    new Person() {Document = "982452", Name = "Mary", Gender = "Female", Age = 22},
+    new Person() {Document = "234241", Name = "Eduardo", Gender = "Male", Age = 19},
+    new Person() {Document = "670056", Name = "Thauany", Gender = "Female", Age = 23},
+    new Person() {Document = "882453", Name = "Anny", Gender = "Female", Age = 38},
+    new Person() {Document = "992400", Name = "Chris", Gender = "Female", Age = 33}
+};
+
+var thirdGroup = firstGroup.Except(secondGroup, new PersonComparer());
+var fourthGroup = secondGroup.Except(firstGroup, new PersonComparer());
+
+Console.WriteLine("First Group:");
+foreach (var stud in thirdGroup)
+    Console.WriteLine(stud.ToString());
+
+Console.WriteLine("Second Group:");
+foreach (var stud in fourthGroup)
+    Console.WriteLine(stud.ToString());
+
+class Person
+{
+    public string Document { get; set; }
     public string Name { get; set; }
+    public string Gender { get; set; }
     public int Age { get; set; }
 
     public override string ToString()
-        => $"{Id}: {Name} - {Age}";
+        => $"\t{Name}\t{Document}\t{Gender} - {Age}";
 }
 
-class StudentComparer : IEqualityComparer<Student>
+class PersonComparer : IEqualityComparer<Person>
 {
-    public bool Equals(Student? x, Student? y)
+    public bool Equals(Person? x, Person? y)
     {
-        if (x?.Id == y?.Id && x?.Name.ToLower() == y?.Name.ToLower())
+        if (x?.Document == y?.Document && x?.Name.ToLower() == y?.Name.ToLower())
             return true;
 
         return false;
     }
 
-    public int GetHashCode([DisallowNull] Student obj)
-        => obj.Id.GetHashCode();
+    public int GetHashCode([DisallowNull] Person obj)
+        => obj.Document.GetHashCode();
 }
+
 #endregion
-
-
 
 
 
