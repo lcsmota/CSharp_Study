@@ -782,30 +782,73 @@
 #endregion
 
 #region Query Operator: Empty, Range and Repeat
-var emptyCollection1 = Enumerable.Empty<string>();
-var emptyCollection2 = Enumerable.Empty<bool>();
+// var emptyCollection1 = Enumerable.Empty<string>();
+// var emptyCollection2 = Enumerable.Empty<bool>();
 
-Console.WriteLine($"Count: {emptyCollection1.Count()}");
-Console.WriteLine($"Type: {emptyCollection1.GetType().Name}");
+// Console.WriteLine($"Count: {emptyCollection1.Count()}");
+// Console.WriteLine($"Type: {emptyCollection1.GetType().Name}");
 
-Console.WriteLine($"Count: {emptyCollection2.Count()}");
-Console.WriteLine($"Type: {emptyCollection2.GetType().Name}");
+// Console.WriteLine($"Count: {emptyCollection2.Count()}");
+// Console.WriteLine($"Type: {emptyCollection2.GetType().Name}");
 
-var intCollection = Enumerable.Range(10, 9);
-Console.WriteLine($"Total count: {intCollection.Count()}");
+// var intCollection = Enumerable.Range(10, 9);
+// Console.WriteLine($"Total count: {intCollection.Count()}");
 
-for (int i = 0; i < intCollection.Count(); i++)
-    Console.WriteLine($"Value at index {i}: {intCollection.ElementAt(i)}");
+// for (int i = 0; i < intCollection.Count(); i++)
+//     Console.WriteLine($"Value at index {i}: {intCollection.ElementAt(i)}");
 
-var strCollection = Enumerable.Repeat("Never give up!", 3);
-Console.WriteLine($"Total count: {strCollection.Count()}");
+// var strCollection = Enumerable.Repeat("Never give up!", 3);
+// Console.WriteLine($"Total count: {strCollection.Count()}");
 
-for (int i = 0; i < strCollection.Count(); i++)
-    Console.WriteLine($"Value at index {i}: {strCollection.ElementAt(i)}");
+// for (int i = 0; i < strCollection.Count(); i++)
+//     Console.WriteLine($"Value at index {i}: {strCollection.ElementAt(i)}");
 
 #endregion
 
+#region Query Operator: Distinct
 
+using System.Diagnostics.CodeAnalysis;
+
+IList<Student> students = new List<Student>()
+{
+    new Student() { Id = 1, Name = "Juca", Age = 22},
+    new Student() { Id = 2, Name = "Mary", Age = 33},
+    new Student() { Id = 3, Name = "Karlos", Age = 19},
+    new Student() { Id = 2, Name = "Mary", Age = 33},
+    new Student() { Id = 5, Name = "Kathia", Age = 27},
+    new Student() { Id = 1, Name = "Juca", Age = 22},
+    new Student() { Id = 7, Name = "Mary", Age = 59}
+};
+
+var distinctStudents = students.Distinct(new StudentComparer());
+
+foreach (var stud in distinctStudents)
+    System.Console.WriteLine(stud.ToString());
+
+class Student
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public int Age { get; set; }
+
+    public override string ToString()
+        => $"{Id}: {Name} - {Age}";
+}
+
+class StudentComparer : IEqualityComparer<Student>
+{
+    public bool Equals(Student? x, Student? y)
+    {
+        if (x?.Id == y?.Id && x?.Name.ToLower() == y?.Name.ToLower())
+            return true;
+
+        return false;
+    }
+
+    public int GetHashCode([DisallowNull] Student obj)
+        => obj.Id.GetHashCode();
+}
+#endregion
 
 
 
