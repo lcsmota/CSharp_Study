@@ -852,67 +852,118 @@
 
 #region Query Operator: Except
 
+// using System.Diagnostics.CodeAnalysis;
+
+// List<Person> firstGroup = new()
+// {
+//     new Person() {Document = "132456", Name = "Karlos", Gender = "Male", Age = 26},
+//     new Person() {Document = "982452", Name = "Mary", Gender = "Female", Age = 22},
+//     new Person() {Document = "234241", Name = "Eduardo", Gender = "Male", Age = 19},
+//     new Person() {Document = "672456", Name = "Kathia", Gender = "Female", Age = 32},
+//     new Person() {Document = "882453", Name = "Anny", Gender = "Female", Age = 38},
+//     new Person() {Document = "992455", Name = "Beatriz", Gender = "Female", Age = 41}
+// };
+
+// List<Person> secondGroup = new()
+// {
+//     new Person() {Document = "132466", Name = "Ronaldo", Gender = "Male", Age = 29},
+//     new Person() {Document = "982452", Name = "Mary", Gender = "Female", Age = 22},
+//     new Person() {Document = "234241", Name = "Eduardo", Gender = "Male", Age = 19},
+//     new Person() {Document = "670056", Name = "Thauany", Gender = "Female", Age = 23},
+//     new Person() {Document = "882453", Name = "Anny", Gender = "Female", Age = 38},
+//     new Person() {Document = "992400", Name = "Chris", Gender = "Female", Age = 33}
+// };
+
+// var thirdGroup = firstGroup.Except(secondGroup, new PersonComparer());
+// var fourthGroup = secondGroup.Except(firstGroup, new PersonComparer());
+
+// Console.WriteLine("First Group:");
+// foreach (var stud in thirdGroup)
+//     Console.WriteLine(stud.ToString());
+
+// Console.WriteLine("Second Group:");
+// foreach (var stud in fourthGroup)
+//     Console.WriteLine(stud.ToString());
+
+// class Person
+// {
+//     public string Document { get; set; }
+//     public string Name { get; set; }
+//     public string Gender { get; set; }
+//     public int Age { get; set; }
+
+//     public override string ToString()
+//         => $"\t{Name}\t{Document}\t{Gender} - {Age}";
+// }
+
+// class PersonComparer : IEqualityComparer<Person>
+// {
+//     public bool Equals(Person? x, Person? y)
+//     {
+//         if (x?.Document == y?.Document && x?.Name.ToLower() == y?.Name.ToLower())
+//             return true;
+
+//         return false;
+//     }
+
+//     public int GetHashCode([DisallowNull] Person obj)
+//         => obj.Document.GetHashCode();
+// }
+
+#endregion
+
+#region Query Operator: Intersect
+
 using System.Diagnostics.CodeAnalysis;
 
-List<Person> firstGroup = new()
+List<Person> firstGroupOfPeople = new()
 {
-    new Person() {Document = "132456", Name = "Karlos", Gender = "Male", Age = 26},
-    new Person() {Document = "982452", Name = "Mary", Gender = "Female", Age = 22},
-    new Person() {Document = "234241", Name = "Eduardo", Gender = "Male", Age = 19},
-    new Person() {Document = "672456", Name = "Kathia", Gender = "Female", Age = 32},
-    new Person() {Document = "882453", Name = "Anny", Gender = "Female", Age = 38},
-    new Person() {Document = "992455", Name = "Beatriz", Gender = "Female", Age = 41}
+    new Person() {Id = 1, Name = "Juca", Age = 25, Gender = "Male"},
+    new Person() {Id = 2, Name = "Karlos", Age = 49, Gender = "Male"},
+    new Person() {Id = 3, Name = "Eduardo", Age = 18, Gender = "Male"},
+    new Person() {Id = 4, Name = "Mary", Age = 33, Gender = "Female"}
 };
 
-List<Person> secondGroup = new()
+List<Person> secondGroupOfPeople = new()
 {
-    new Person() {Document = "132466", Name = "Ronaldo", Gender = "Male", Age = 29},
-    new Person() {Document = "982452", Name = "Mary", Gender = "Female", Age = 22},
-    new Person() {Document = "234241", Name = "Eduardo", Gender = "Male", Age = 19},
-    new Person() {Document = "670056", Name = "Thauany", Gender = "Female", Age = 23},
-    new Person() {Document = "882453", Name = "Anny", Gender = "Female", Age = 38},
-    new Person() {Document = "992400", Name = "Chris", Gender = "Female", Age = 33}
+    new Person() {Id = 1, Name = "Juca", Age = 25, Gender = "Male"},
+    new Person() {Id = 2, Name = "Karlos", Age = 49, Gender = "Male"},
+    new Person() {Id = 6, Name = "Anny", Age = 49, Gender = "Female"},
+    new Person() {Id = 8, Name = "Kathia", Age = 49, Gender = "Female"},
+    new Person() {Id = 9, Name = "Kassandra", Age = 49, Gender = "Female"}
 };
 
-var thirdGroup = firstGroup.Except(secondGroup, new PersonComparer());
-var fourthGroup = secondGroup.Except(firstGroup, new PersonComparer());
+var thirdGroupResult = firstGroupOfPeople.Intersect(secondGroupOfPeople, new PersonComparer());
 
-Console.WriteLine("First Group:");
-foreach (var stud in thirdGroup)
-    Console.WriteLine(stud.ToString());
-
-Console.WriteLine("Second Group:");
-foreach (var stud in fourthGroup)
-    Console.WriteLine(stud.ToString());
+foreach (var person in thirdGroupResult)
+    Console.WriteLine(person.ToString());
 
 class Person
 {
-    public string Document { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; }
-    public string Gender { get; set; }
     public int Age { get; set; }
+    public string Gender { get; set; }
 
     public override string ToString()
-        => $"\t{Name}\t{Document}\t{Gender} - {Age}";
+        => $"{Name} - {Age} - Gender";
 }
 
 class PersonComparer : IEqualityComparer<Person>
 {
     public bool Equals(Person? x, Person? y)
     {
-        if (x?.Document == y?.Document && x?.Name.ToLower() == y?.Name.ToLower())
+        if (x?.Id == y?.Id && x?.Name == y?.Name)
             return true;
 
         return false;
     }
 
     public int GetHashCode([DisallowNull] Person obj)
-        => obj.Document.GetHashCode();
+        => obj.Id.GetHashCode();
+
 }
-
 #endregion
-
-
 
 
 
