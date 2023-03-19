@@ -914,44 +914,95 @@
 
 #region Query Operator: Intersect
 
+// using System.Diagnostics.CodeAnalysis;
+
+// List<Person> firstGroupOfPeople = new()
+// {
+//     new Person() {Id = 1, Name = "Juca", Age = 25, Gender = "Male"},
+//     new Person() {Id = 2, Name = "Karlos", Age = 49, Gender = "Male"},
+//     new Person() {Id = 3, Name = "Eduardo", Age = 18, Gender = "Male"},
+//     new Person() {Id = 4, Name = "Mary", Age = 33, Gender = "Female"}
+// };
+
+// List<Person> secondGroupOfPeople = new()
+// {
+//     new Person() {Id = 1, Name = "Juca", Age = 25, Gender = "Male"},
+//     new Person() {Id = 2, Name = "Karlos", Age = 49, Gender = "Male"},
+//     new Person() {Id = 6, Name = "Anny", Age = 49, Gender = "Female"},
+//     new Person() {Id = 8, Name = "Kathia", Age = 49, Gender = "Female"},
+//     new Person() {Id = 9, Name = "Kassandra", Age = 49, Gender = "Female"}
+// };
+
+// var thirdGroupResult = firstGroupOfPeople.Intersect(secondGroupOfPeople, new PersonComparer());
+
+// foreach (var person in thirdGroupResult)
+//     Console.WriteLine(person.ToString());
+
+// class Person
+// {
+//     public int Id { get; set; }
+//     public string Name { get; set; }
+//     public int Age { get; set; }
+//     public string Gender { get; set; }
+
+//     public override string ToString()
+//         => $"{Name} - {Age} - Gender";
+// }
+
+// class PersonComparer : IEqualityComparer<Person>
+// {
+//     public bool Equals(Person? x, Person? y)
+//     {
+//         if (x?.Id == y?.Id && x?.Name == y?.Name)
+//             return true;
+
+//         return false;
+//     }
+
+//     public int GetHashCode([DisallowNull] Person obj)
+//         => obj.Id.GetHashCode();
+
+// }
+#endregion
+
+#region Query Operator: Union
+
 using System.Diagnostics.CodeAnalysis;
 
-List<Person> firstGroupOfPeople = new()
+List<Student> firstListOfStudents = new()
 {
-    new Person() {Id = 1, Name = "Juca", Age = 25, Gender = "Male"},
-    new Person() {Id = 2, Name = "Karlos", Age = 49, Gender = "Male"},
-    new Person() {Id = 3, Name = "Eduardo", Age = 18, Gender = "Male"},
-    new Person() {Id = 4, Name = "Mary", Age = 33, Gender = "Female"}
+    new Student() { Id = 13, Name = "Mario", Age = 38},
+    new Student() { Id = 24, Name = "Marcos", Age = 16},
+    new Student() { Id = 53, Name = "Marcello", Age = 24},
+    new Student() { Id = 84, Name = "Marcio", Age = 27},
+    new Student() { Id = 75, Name = "Maria", Age = 42}
 };
 
-List<Person> secondGroupOfPeople = new()
+List<Student> secondListOfStudents = new()
 {
-    new Person() {Id = 1, Name = "Juca", Age = 25, Gender = "Male"},
-    new Person() {Id = 2, Name = "Karlos", Age = 49, Gender = "Male"},
-    new Person() {Id = 6, Name = "Anny", Age = 49, Gender = "Female"},
-    new Person() {Id = 8, Name = "Kathia", Age = 49, Gender = "Female"},
-    new Person() {Id = 9, Name = "Kassandra", Age = 49, Gender = "Female"}
+    new Student() {Id = 31, Name = "Anna", Age = 19},
+    new Student() {Id = 7, Name = "Amanda", Age = 22},
+    new Student() {Id = 11, Name = "Annabelle", Age = 36},
+    new Student() {Id = 91, Name = "Isadora", Age = 27}
 };
 
-var thirdGroupResult = firstGroupOfPeople.Intersect(secondGroupOfPeople, new PersonComparer());
+var students = firstListOfStudents.Union(secondListOfStudents, new StudentComparer());
 
-foreach (var person in thirdGroupResult)
-    Console.WriteLine(person.ToString());
-
-class Person
+foreach (var stud in students)
+    Console.WriteLine(stud.ToString());
+class Student
 {
     public int Id { get; set; }
     public string Name { get; set; }
     public int Age { get; set; }
-    public string Gender { get; set; }
 
     public override string ToString()
-        => $"{Name} - {Age} - Gender";
+        => $"{Name} - {Age}";
 }
 
-class PersonComparer : IEqualityComparer<Person>
+class StudentComparer : IEqualityComparer<Student>
 {
-    public bool Equals(Person? x, Person? y)
+    public bool Equals(Student? x, Student? y)
     {
         if (x?.Id == y?.Id && x?.Name == y?.Name)
             return true;
@@ -959,13 +1010,10 @@ class PersonComparer : IEqualityComparer<Person>
         return false;
     }
 
-    public int GetHashCode([DisallowNull] Person obj)
+    public int GetHashCode([DisallowNull] Student obj)
         => obj.Id.GetHashCode();
-
 }
 #endregion
-
-
 
 
 
