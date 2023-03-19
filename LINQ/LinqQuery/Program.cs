@@ -975,13 +975,17 @@ List<Student> firstListOfStudents = new()
     new Student() { Id = 24, Name = "Marcos", Age = 16},
     new Student() { Id = 53, Name = "Marcello", Age = 24},
     new Student() { Id = 84, Name = "Marcio", Age = 27},
-    new Student() { Id = 75, Name = "Maria", Age = 42}
+    new Student() { Id = 75, Name = "Maria", Age = 42},
+    new Student() {Id = 31, Name = "Anna", Age = 19},
+    new Student() {Id = 7, Name = "Amanda", Age = 22}
 };
 
 List<Student> secondListOfStudents = new()
 {
     new Student() {Id = 31, Name = "Anna", Age = 19},
     new Student() {Id = 7, Name = "Amanda", Age = 22},
+    new Student() { Id = 53, Name = "Marcello", Age = 24},
+    new Student() { Id = 84, Name = "Marcio", Age = 27},
     new Student() {Id = 11, Name = "Annabelle", Age = 36},
     new Student() {Id = 91, Name = "Isadora", Age = 27}
 };
