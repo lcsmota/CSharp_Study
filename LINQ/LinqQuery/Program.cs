@@ -1020,37 +1020,57 @@
 #endregion
 
 #region Query Operator: Skip, SkipLast and SkipWhile
-List<int> numbers = new()
-{
-    1, 2, 56, 78, 11, 87, 95, 6, 232
-};
+// List<int> numbers = new()
+// {
+//     1, 2, 56, 78, 11, 87, 95, 6, 232
+// };
 
+// List<string> names = new()
+// {
+//     "Juca", "Marcos", "Eduardo",
+//     "Anny", "Kassandra", "John"
+// };
+
+// var intList = numbers.Skip(4);
+// foreach (var number in intList)
+//     Console.Write($"{number} ");
+
+// Console.WriteLine();
+// var nameList = names.SkipWhile(e => e.Length < 7);
+// foreach (var name in nameList)
+//     Console.Write($"{name} ");
+
+// Console.WriteLine();
+// var nameList2 = names.SkipLast(3);
+// foreach (var name in nameList2)
+//     Console.Write($"{name} ");
+
+// Console.WriteLine();
+#endregion
+
+#region Query Operator: Take, TakeLast and TakeWhile
 List<string> names = new()
 {
-    "Juca", "Marcos", "Eduardo",
-    "Anny", "Kassandra", "John"
+    "Mary", "Andrea", "Gustavo",
+    "Thauanny", "Laedson", "Lucas"
 };
 
-var intList = numbers.Skip(4);
-foreach (var number in intList)
-    Console.Write($"{number} ");
-
-Console.WriteLine();
-var nameList = names.SkipWhile(e => e.Length < 7);
-foreach (var name in nameList)
+var nameList1 = names.Take(3);
+foreach (var name in nameList1)
     Console.Write($"{name} ");
 
 Console.WriteLine();
-var nameList2 = names.SkipLast(3);
+var nameList2 = names.TakeLast(3);
 foreach (var name in nameList2)
     Console.Write($"{name} ");
 
 Console.WriteLine();
+var nameList3 = names.TakeWhile(e => e.Length < 5);
+foreach (var name in nameList3)
+    Console.Write($"{name} ");
+
+Console.WriteLine();
 #endregion
-
-
-
-
 
 
 
