@@ -967,59 +967,86 @@
 
 #region Query Operator: Union
 
-using System.Diagnostics.CodeAnalysis;
+// using System.Diagnostics.CodeAnalysis;
 
-List<Student> firstListOfStudents = new()
-{
-    new Student() { Id = 13, Name = "Mario", Age = 38},
-    new Student() { Id = 24, Name = "Marcos", Age = 16},
-    new Student() { Id = 53, Name = "Marcello", Age = 24},
-    new Student() { Id = 84, Name = "Marcio", Age = 27},
-    new Student() { Id = 75, Name = "Maria", Age = 42},
-    new Student() {Id = 31, Name = "Anna", Age = 19},
-    new Student() {Id = 7, Name = "Amanda", Age = 22}
-};
+// List<Student> firstListOfStudents = new()
+// {
+//     new Student() { Id = 13, Name = "Mario", Age = 38},
+//     new Student() { Id = 24, Name = "Marcos", Age = 16},
+//     new Student() { Id = 53, Name = "Marcello", Age = 24},
+//     new Student() { Id = 84, Name = "Marcio", Age = 27},
+//     new Student() { Id = 75, Name = "Maria", Age = 42},
+//     new Student() {Id = 31, Name = "Anna", Age = 19},
+//     new Student() {Id = 7, Name = "Amanda", Age = 22}
+// };
 
-List<Student> secondListOfStudents = new()
-{
-    new Student() {Id = 31, Name = "Anna", Age = 19},
-    new Student() {Id = 7, Name = "Amanda", Age = 22},
-    new Student() { Id = 53, Name = "Marcello", Age = 24},
-    new Student() { Id = 84, Name = "Marcio", Age = 27},
-    new Student() {Id = 11, Name = "Annabelle", Age = 36},
-    new Student() {Id = 91, Name = "Isadora", Age = 27}
-};
+// List<Student> secondListOfStudents = new()
+// {
+//     new Student() {Id = 31, Name = "Anna", Age = 19},
+//     new Student() {Id = 7, Name = "Amanda", Age = 22},
+//     new Student() { Id = 53, Name = "Marcello", Age = 24},
+//     new Student() { Id = 84, Name = "Marcio", Age = 27},
+//     new Student() {Id = 11, Name = "Annabelle", Age = 36},
+//     new Student() {Id = 91, Name = "Isadora", Age = 27}
+// };
 
-var students = firstListOfStudents.Union(secondListOfStudents, new StudentComparer());
+// var students = firstListOfStudents.Union(secondListOfStudents, new StudentComparer());
 
-foreach (var stud in students)
-    Console.WriteLine(stud.ToString());
-class Student
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public int Age { get; set; }
+// foreach (var stud in students)
+//     Console.WriteLine(stud.ToString());
+// class Student
+// {
+//     public int Id { get; set; }
+//     public string Name { get; set; }
+//     public int Age { get; set; }
 
-    public override string ToString()
-        => $"{Name} - {Age}";
-}
+//     public override string ToString()
+//         => $"{Name} - {Age}";
+// }
 
-class StudentComparer : IEqualityComparer<Student>
-{
-    public bool Equals(Student? x, Student? y)
-    {
-        if (x?.Id == y?.Id && x?.Name == y?.Name)
-            return true;
+// class StudentComparer : IEqualityComparer<Student>
+// {
+//     public bool Equals(Student? x, Student? y)
+//     {
+//         if (x?.Id == y?.Id && x?.Name == y?.Name)
+//             return true;
 
-        return false;
-    }
+//         return false;
+//     }
 
-    public int GetHashCode([DisallowNull] Student obj)
-        => obj.Id.GetHashCode();
-}
+//     public int GetHashCode([DisallowNull] Student obj)
+//         => obj.Id.GetHashCode();
+// }
 #endregion
 
+#region Query Operator: Skip, SkipLast and SkipWhile
+List<int> numbers = new()
+{
+    1, 2, 56, 78, 11, 87, 95, 6, 232
+};
 
+List<string> names = new()
+{
+    "Juca", "Marcos", "Eduardo",
+    "Anny", "Kassandra", "John"
+};
+
+var intList = numbers.Skip(4);
+foreach (var number in intList)
+    Console.Write($"{number} ");
+
+Console.WriteLine();
+var nameList = names.SkipWhile(e => e.Length < 7);
+foreach (var name in nameList)
+    Console.Write($"{name} ");
+
+Console.WriteLine();
+var nameList2 = names.SkipLast(3);
+foreach (var name in nameList2)
+    Console.Write($"{name} ");
+
+Console.WriteLine();
+#endregion
 
 
 
