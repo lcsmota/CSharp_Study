@@ -1073,39 +1073,67 @@
 #endregion
 
 #region Query Operator: AsEnumerable, AsQueryable and Cast
-Student[] studentArray =
+// Student[] studentArray =
+// {
+//     new Student() { Id = 1, Name = "Maria", Age = 48},
+//     new Student() { Id = 2, Name = "John", Age = 39},
+//     new Student() { Id = 3, Name = "Talita", Age = 19},
+//     new Student() { Id = 4, Name = "Victoria", Age = 22},
+//     new Student() { Id = 5, Name = "Nadja", Age = 23},
+//     new Student() { Id = 6, Name = "Laila", Age = 20}
+// };
+
+// ReportTypeProperties(studentArray);
+// ReportTypeProperties(studentArray.AsEnumerable());
+// ReportTypeProperties(studentArray.AsQueryable());
+// ReportTypeProperties(studentArray.Cast<Student>());
+
+// void ReportTypeProperties<T>(T obj)
+// {
+//     Console.WriteLine($"Compile-time type: {typeof(T).Name}");
+//     Console.WriteLine($"Actual type: {obj?.GetType().Name}");
+// }
+
+// class Student
+// {
+//     public int Id { get; set; }
+//     public string Name { get; set; }
+//     public int Age { get; set; }
+
+//     public override string ToString()
+//         => $"{Id}: {Name} - {Age}";
+// }
+#endregion
+
+#region Query Operator: ToList, ToArray and ToDictionary
+IList<string> strList = new List<string>()
 {
-    new Student() { Id = 1, Name = "Maria", Age = 48},
-    new Student() { Id = 2, Name = "John", Age = 39},
-    new Student() { Id = 3, Name = "Talita", Age = 19},
-    new Student() { Id = 4, Name = "Victoria", Age = 22},
-    new Student() { Id = 5, Name = "Nadja", Age = 23},
-    new Student() { Id = 6, Name = "Laila", Age = 20}
+    "One", "Two", "Five",
+    "House", "Car", "Woman"
 };
 
-ReportTypeProperties(studentArray);
-ReportTypeProperties(studentArray.AsEnumerable());
-ReportTypeProperties(studentArray.AsQueryable());
-ReportTypeProperties(studentArray.Cast<Student>());
+string[] strArray = strList.ToArray<string>();
+IList<string> list = strArray.ToList<string>();
 
-void ReportTypeProperties<T>(T obj)
+IList<Person> people = new List<Person>
 {
-    Console.WriteLine($"Compile-time type: {typeof(T).Name}");
-    Console.WriteLine($"Actual type: {obj?.GetType().Name}");
-}
+    new Person() {Id = 41, Name = "Juliana", Age = 21},
+    new Person() {Id = 15, Name = "Simon", Age = 54},
+    new Person() {Id = 18, Name = "Laura", Age = 23},
+    new Person() {Id = 91, Name = "Bia", Age = 34}
+};
 
-class Student
+IDictionary<int, Person> person = people.ToDictionary<Person, int>(e => e.Id);
+
+foreach (var key in person.Keys)
+    Console.WriteLine($"Key: {key}, Value: {(person[key] as Person).Name}");
+class Person
 {
     public int Id { get; set; }
     public string Name { get; set; }
     public int Age { get; set; }
-
-    public override string ToString()
-        => $"{Id}: {Name} - {Age}";
 }
 #endregion
-
-
 
 
 
