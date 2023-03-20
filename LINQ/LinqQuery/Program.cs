@@ -1049,30 +1049,61 @@
 #endregion
 
 #region Query Operator: Take, TakeLast and TakeWhile
-List<string> names = new()
-{
-    "Mary", "Andrea", "Gustavo",
-    "Thauanny", "Laedson", "Lucas"
-};
+// List<string> names = new()
+// {
+//     "Mary", "Andrea", "Gustavo",
+//     "Thauanny", "Laedson", "Lucas"
+// };
 
-var nameList1 = names.Take(3);
-foreach (var name in nameList1)
-    Console.Write($"{name} ");
+// var nameList1 = names.Take(3);
+// foreach (var name in nameList1)
+//     Console.Write($"{name} ");
 
-Console.WriteLine();
-var nameList2 = names.TakeLast(3);
-foreach (var name in nameList2)
-    Console.Write($"{name} ");
+// Console.WriteLine();
+// var nameList2 = names.TakeLast(3);
+// foreach (var name in nameList2)
+//     Console.Write($"{name} ");
 
-Console.WriteLine();
-var nameList3 = names.TakeWhile(e => e.Length < 5);
-foreach (var name in nameList3)
-    Console.Write($"{name} ");
+// Console.WriteLine();
+// var nameList3 = names.TakeWhile(e => e.Length < 5);
+// foreach (var name in nameList3)
+//     Console.Write($"{name} ");
 
-Console.WriteLine();
+// Console.WriteLine();
 #endregion
 
+#region Query Operator: AsEnumerable, AsQueryable and Cast
+Student[] studentArray =
+{
+    new Student() { Id = 1, Name = "Maria", Age = 48},
+    new Student() { Id = 2, Name = "John", Age = 39},
+    new Student() { Id = 3, Name = "Talita", Age = 19},
+    new Student() { Id = 4, Name = "Victoria", Age = 22},
+    new Student() { Id = 5, Name = "Nadja", Age = 23},
+    new Student() { Id = 6, Name = "Laila", Age = 20}
+};
 
+ReportTypeProperties(studentArray);
+ReportTypeProperties(studentArray.AsEnumerable());
+ReportTypeProperties(studentArray.AsQueryable());
+ReportTypeProperties(studentArray.Cast<Student>());
+
+void ReportTypeProperties<T>(T obj)
+{
+    Console.WriteLine($"Compile-time type: {typeof(T).Name}");
+    Console.WriteLine($"Actual type: {obj?.GetType().Name}");
+}
+
+class Student
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public int Age { get; set; }
+
+    public override string ToString()
+        => $"{Id}: {Name} - {Age}";
+}
+#endregion
 
 
 
