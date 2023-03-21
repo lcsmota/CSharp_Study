@@ -1106,36 +1106,66 @@
 #endregion
 
 #region Query Operator: ToList, ToArray and ToDictionary
-IList<string> strList = new List<string>()
+// IList<string> strList = new List<string>()
+// {
+//     "One", "Two", "Five",
+//     "House", "Car", "Woman"
+// };
+
+// string[] strArray = strList.ToArray<string>();
+// IList<string> list = strArray.ToList<string>();
+
+// IList<Person> people = new List<Person>
+// {
+//     new Person() {Id = 41, Name = "Juliana", Age = 21},
+//     new Person() {Id = 15, Name = "Simon", Age = 54},
+//     new Person() {Id = 18, Name = "Laura", Age = 23},
+//     new Person() {Id = 91, Name = "Bia", Age = 34}
+// };
+
+// IDictionary<int, Person> person = people.ToDictionary<Person, int>(e => e.Id);
+
+// foreach (var key in person.Keys)
+//     Console.WriteLine($"Key: {key}, Value: {(person[key] as Person).Name}");
+// class Person
+// {
+//     public int Id { get; set; }
+//     public string Name { get; set; }
+//     public int Age { get; set; }
+// }
+#endregion
+
+#region Keyword: Let
+
+IList<Student> students = new List<Student>()
 {
-    "One", "Two", "Five",
-    "House", "Car", "Woman"
+    new Student() { Id = 1, Name = "Maria", Age = 26},
+    new Student() { Id = 2, Name = "Karlos", Age = 19},
+    new Student() { Id = 3, Name = "Joanna", Age = 20},
+    new Student() { Id = 4, Name = "Mary", Age = 24},
+    new Student() { Id = 5, Name = "Anny", Age = 33},
+    new Student() { Id = 5, Name = "Kathia", Age = 33},
+    new Student() { Id = 5, Name = "Eduardo", Age = 33},
+    new Student() { Id = 5, Name = "Amanda", Age = 33},
 };
 
-string[] strArray = strList.ToArray<string>();
-IList<string> list = strArray.ToList<string>();
+var lowercaseStudentNames = from stud in students
+                            let lowercaseName = stud.Name.ToLower()
+                            where lowercaseName.EndsWith("a")
+                            select lowercaseName;
 
-IList<Person> people = new List<Person>
-{
-    new Person() {Id = 41, Name = "Juliana", Age = 21},
-    new Person() {Id = 15, Name = "Simon", Age = 54},
-    new Person() {Id = 18, Name = "Laura", Age = 23},
-    new Person() {Id = 91, Name = "Bia", Age = 34}
-};
-
-IDictionary<int, Person> person = people.ToDictionary<Person, int>(e => e.Id);
-
-foreach (var key in person.Keys)
-    Console.WriteLine($"Key: {key}, Value: {(person[key] as Person).Name}");
-class Person
+foreach (var std in lowercaseStudentNames)
+    Console.WriteLine(std.ToString()); ;
+class Student
 {
     public int Id { get; set; }
     public string Name { get; set; }
     public int Age { get; set; }
+
+    public override string ToString()
+        => $"{Name} - {Age}";
 }
 #endregion
-
-
 
 
 
