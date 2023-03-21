@@ -1137,28 +1137,59 @@
 
 #region Keyword: Let
 
-IList<Student> students = new List<Student>()
+// IList<Student> students = new List<Student>()
+// {
+//     new Student() { Id = 1, Name = "Maria", Age = 26},
+//     new Student() { Id = 2, Name = "Karlos", Age = 19},
+//     new Student() { Id = 3, Name = "Joanna", Age = 20},
+//     new Student() { Id = 4, Name = "Mary", Age = 24},
+//     new Student() { Id = 5, Name = "Anny", Age = 33},
+//     new Student() { Id = 5, Name = "Kathia", Age = 33},
+//     new Student() { Id = 5, Name = "Eduardo", Age = 33},
+//     new Student() { Id = 5, Name = "Amanda", Age = 33},
+// };
+
+// var lowercaseStudentNames = from stud in students
+//                             let lowercaseName = stud.Name.ToLower()
+//                             where lowercaseName.EndsWith("a")
+//                             select lowercaseName;
+
+// foreach (var std in lowercaseStudentNames)
+//     Console.WriteLine(std.ToString()); ;
+// class Student
+// {
+//     public int Id { get; set; }
+//     public string Name { get; set; }
+//     public int Age { get; set; }
+
+//     public override string ToString()
+//         => $"{Name} - {Age}";
+// }
+#endregion
+
+#region Keyword: Into
+
+var people = new List<Person>
 {
-    new Student() { Id = 1, Name = "Maria", Age = 26},
-    new Student() { Id = 2, Name = "Karlos", Age = 19},
-    new Student() { Id = 3, Name = "Joanna", Age = 20},
-    new Student() { Id = 4, Name = "Mary", Age = 24},
-    new Student() { Id = 5, Name = "Anny", Age = 33},
-    new Student() { Id = 5, Name = "Kathia", Age = 33},
-    new Student() { Id = 5, Name = "Eduardo", Age = 33},
-    new Student() { Id = 5, Name = "Amanda", Age = 33},
+    new Person() {Name = "Luca", Age = 17},
+    new Person() {Name = "Carlos", Age = 35},
+    new Person() {Name = "Thamara", Age = 16},
+    new Person() {Name = "Laila", Age = 29},
+    new Person() {Name = "Nadja", Age = 18}
 };
 
-var lowercaseStudentNames = from stud in students
-                            let lowercaseName = stud.Name.ToLower()
-                            where lowercaseName.EndsWith("a")
-                            select lowercaseName;
+var teenAger = from person in people
+               where person.Age > 12 && person.Age < 20
+               select person
+                into teen
+               where teen.Name.EndsWith('a')
+               select teen;
 
-foreach (var std in lowercaseStudentNames)
-    Console.WriteLine(std.ToString()); ;
-class Student
+foreach (var prs in teenAger)
+    Console.WriteLine(prs.ToString());
+
+class Person
 {
-    public int Id { get; set; }
     public string Name { get; set; }
     public int Age { get; set; }
 
@@ -1166,11 +1197,3 @@ class Student
         => $"{Name} - {Age}";
 }
 #endregion
-
-
-
-
-
-
-
-
