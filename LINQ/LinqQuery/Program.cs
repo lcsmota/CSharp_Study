@@ -1169,31 +1169,47 @@
 
 #region Keyword: Into
 
-var people = new List<Person>
-{
-    new Person() {Name = "Luca", Age = 17},
-    new Person() {Name = "Carlos", Age = 35},
-    new Person() {Name = "Thamara", Age = 16},
-    new Person() {Name = "Laila", Age = 29},
-    new Person() {Name = "Nadja", Age = 18}
-};
+// var people = new List<Person>
+// {
+//     new Person() {Name = "Luca", Age = 17},
+//     new Person() {Name = "Carlos", Age = 35},
+//     new Person() {Name = "Thamara", Age = 16},
+//     new Person() {Name = "Laila", Age = 29},
+//     new Person() {Name = "Nadja", Age = 18}
+// };
 
-var teenAger = from person in people
-               where person.Age > 12 && person.Age < 20
-               select person
-                into teen
-               where teen.Name.EndsWith('a')
-               select teen;
+// var teenAger = from person in people
+//                where person.Age > 12 && person.Age < 20
+//                select person
+//                 into teen
+//                where teen.Name.EndsWith('a')
+//                select teen;
 
-foreach (var prs in teenAger)
-    Console.WriteLine(prs.ToString());
+// foreach (var prs in teenAger)
+//     Console.WriteLine(prs.ToString());
 
-class Person
-{
-    public string Name { get; set; }
-    public int Age { get; set; }
+// class Person
+// {
+//     public string Name { get; set; }
+//     public int Age { get; set; }
 
-    public override string ToString()
-        => $"{Name} - {Age}";
-}
+//     public override string ToString()
+//         => $"{Name} - {Age}";
+// }
+#endregion
+
+#region Query Operator: Reverse
+int[] numbers = { 56, 12, 7, 87, 19, 33, 47, 51, 11 };
+
+IEnumerable<int> reversed = numbers.Reverse();
+
+Console.WriteLine("\tNumbers:");
+foreach (var number in numbers)
+    Console.Write($"{number}|");
+
+Console.WriteLine("\n\tReversed:");
+foreach (var number in reversed)
+    Console.Write($"{number}|");
+
+Console.WriteLine();
 #endregion
